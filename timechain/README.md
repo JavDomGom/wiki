@@ -86,7 +86,29 @@ Por otro lado, las tecnologías que implementan protocolos *Blockchain* necesita
 <p align="center"><img src="img/timechain_07.png"></p>
 <br>
 
-El “*ataque del 51%*” es un posible escenario en el que se ve comprometida la seguridad y la integridad de la información en más de la mitad de los nodos que conforman una red. Si bien es cierto que a mayor número de nodos más dificultad de realizar dicho ataque, solo estaríamos aumentando la dificultad de sufrir un ataque de este tipo, pero no eliminas el problema. En redes con muchos nodos como la red de *Bitcoin* es bastante difícil, pero no imposible, por lo que no es suficiente, además tiene que haber una prueba de trabajo (*proof of work*) que no es más que una serie de cálculos matemáticos muy complicados y pseudo-aleatorios para obtener un resultado esperado. Esto dificulta más el poder modificar la integridad de la información en el registro de la cadena de bloques. Por otro lado, los propios protocolos *Blockchain* tienen la información ligada entre los diferentes bloques con un resumen o hash de la información que contiene el bloque anterior, por lo que si se diera el caso de una manipulación con éxito en un bloque, debería realizarse un recálculo de toda la información que existe desde el bloque manipulado hasta el último bloque de la cadena y propagar esta nueva información en al menos el 51% de los nodos. Con la computación binaria que utilizamos actualmente se torna algo matemáticamente posible, pero físicamente (por cuestión de tiempo y energía) muy improbable, teniendo en cuenta que cada aproximadamente 10 minutos la cadena más larga de bloques se propaga de nuevo por toda la red.
+El “*ataque del 51%*” es un posible escenario en el que se ve comprometida la seguridad y la integridad de la información en más de la mitad de los nodos que conforman una red. Si bien es cierto que a mayor número de nodos más dificultad de realizar dicho ataque, solo estaríamos aumentando la dificultad de sufrir un ataque de este tipo, pero no eliminas el problema. En redes con muchos nodos como la red de *Bitcoin* es bastante difícil, pero no imposible, por lo que no es suficiente, además tiene que haber una prueba de trabajo (*proof of work*) que no es más que una serie de cálculos matemáticos muy complicados y pseudo-aleatorios para obtener un resultado esperado.
+
+De todas las variables de los protocolos *Blockchain* quizás el más importante y determinante, a la hora de escribir la información de los bloques y de la seguridad frente a supuestas modificaciones en el registro, sea la variable *targetDifficulty*. A este dato también se le llama simplemente *target* o "*Bits*" si se hace referencia al empaquetado de datos en el bloque. Se trata de un número entero de 256 *bits* representado como un número decimal muy grande, tanto que abarcaría el rango de números existentes entre `0 y 2^256-1`. El siguiente número sería el valor hexadecimal máximo que podría tomar la variable *targetDifficulty*:
+
+<p align="center"><img src="img/timechain_18.png"></p>
+<br>
+
+En el bloque se almacena como un número decimal de coma flotante truncando, por ejemplo, el valor hexadecimal anterior quedaría representado de la siguiente forma:
+
+<p align="center"><img src="img/timechain_19.png"></p>
+<br>
+
+La dificultad es el resultado de dividir el valor máximo entre el valor actual de la variable *targetDifficulty*, tal y como se muestra en la siguiente fórmula:
+
+<p align="center"><img src="img/timechain_20.png"></p>
+<br>
+
+Hay que tener en cuenta el valor de la variable *targetDifficulty* en cada caso. Es una de las variables más importantes a tener en cuenta a la hora de obtener el *hash* adecuado del bloque antes de incorporarlo a la cadena como un bloque válido. Así pues la prueba de trabajo o *Proof of Work* tendrá mayor o menor dificultad. En el protocolo de *Bitcoin* se define una regla que dice que el *hash* del bloque ha de ser un número menor o igual al valor de esta variable *targetDifficulty* en ese momento. De modo que si el *hash* obtenido como candidato a generar un bloque fuese un número menor o igual al de *targetDifficulty* habría posibilidades para que el *hash* candidato sea válido para generar un nuevo bloque, aunque de forma adicional se han de cumplir otras condiciones. Por el contrario, si el *hash* obtenido como candidato fuera un número mayor que el valor de esta variable *targetDifficulty*, este quedaría desestimado, entonces habría que incrementar el valor de la variable nonce y repetir todo el proceso para generar un *hash* nuevo. El siguiente gráfico muestra la variación de la dificultad a lo largo del tiempo:
+
+<p align="center"><img src="img/timechain_21.png"></p>
+<br>
+
+Esto dificulta más el poder modificar la integridad de la información en el registro de la cadena de bloques. Por otro lado, los propios protocolos *Blockchain* tienen la información ligada entre los diferentes bloques con un resumen o hash de la información que contiene el bloque anterior, por lo que si se diera el caso de una manipulación con éxito en un bloque, debería realizarse un recálculo de toda la información que existe desde el bloque manipulado hasta el último bloque de la cadena y propagar esta nueva información en al menos el 51% de los nodos. Con la computación binaria que utilizamos actualmente se torna algo matemáticamente posible, pero físicamente (por cuestión de tiempo y energía) muy improbable, teniendo en cuenta que cada aproximadamente 10 minutos la cadena más larga de bloques se propaga de nuevo por toda la red.
 
 Otro punto débil en prácticamente toda tecnología que se precie está “en casa”, es decir, los propios desarrolladores de la tecnología. Un desarrollador o un grupo de desarrolladores de una tecnología que implementa protocolos de tipo *Blockchain* podrían ingeniárselas para incorporar con cierta habilidad a la rama de desarrollo algunas vulnerabilidades que y pasar totalmente desapercibidos. A veces estas acciones ocurren involuntariamente, fruto de un error humano o despiste, y son otros terceros los que explotan estas vulnerabilidades.
 
@@ -123,12 +145,15 @@ En el caso de *Bitcoin*, la función hash SHA-256 se utiliza con varios propósi
 
 ### Árbol de Merkle
 
-Cada vez que una nueva transacción es aceptada el valor de esta variable se modifica. Para obtener el hash final, también llamado *hash root* se han de concatenar los datos de las transacciones ubicados en los nodos hoja del árbol, en grupos de dos. De ese modo, por cada dos transacciones se obtiene un hash nuevo que será incluido en un nuevo vector que repetirá la acción hasta llegar al *hash root*.
+Cada bloque de la cadena de bloques tiene una cabecera (*header*) con información que relativa al bloque en cuestión. Un dato muy importante de esta cabecera es una variable llamada *merkleRoot*, se trata de un resumen *hash* de todas las transacciones que se incluyen en el bloque. Para calcularlo se emplea una función *hash* SHA-256 siguiendo un orden específico. Cada vez que una nueva transacción es aceptada el valor de esta variable se modifica. Para obtener el *hash* final, también llamado *hash root* se han de concatenar los datos de las transacciones ubicados en los nodos hoja del árbol, en grupos de dos. De ese modo, por cada dos transacciones se obtiene un hash nuevo que será incluido en un nuevo vector que repetirá la acción hasta llegar al *hash root* tal y como se muestra en la siguiente imagen:
 
 <p align="center"><img src="img/timechain_09.png"></p>
 <br>
 
-xxx
+Cada uno de los vectores v =〈v1, v2 ,..., vn−1, vn〉irá reduciendo  el número de nodos o elementos mediante la siguiente función recursiva por intervalos o algoritmo de complejidad O(n):
+
+<p align="center"><img src="img/timechain_17.png"></p>
+<br>
 
 ## Registro y tratamiento de la información
 
@@ -192,7 +217,13 @@ De hecho, de todas las tecnologías que implementan *Blockchain*, la que más ha
 
 ### Casos de uso reales
 
-Hablar de los tokens, las ICOs, Maersk con IBM y Elements.
+En el protocolo *Bitcoin* los *smart contracts* se usan prácticamente en su totalidad para la gestión de las transacciones y mensajes a través de la red. Aunque también se pueden hacer *smart contracts* para otros fines, la dificultad para codificarlos y entenderlos hace que la mayoría de los usuarios opten por soluciones más sencillas y rápidas como los *smart contracts* de *Ethereum*.
+
+Entre los casos de uso reales fuera de *Bitcoin* el más notable es sin duda el de los *smart contracts* de tipo ERC-20 del protocolo *Ethereum* que se emplean para generar una cantidad finita de *tokens* y crear lo que se denomina una “Oferta Inicial de Monedas” o en inglés *Initial Coin Offering* (ICO). Una ICO es un tipo de financiación usando criptomonedas. Mayoritariamente el proceso es llevado a cabo mediante un *crowdfunding* o *crowlending*, aunque las ICOs privadas se están volviendo muy comunes. En una ICO, las criptomonedas son vendidas en forma de *tokens* a especuladores o inversores a cambio de dinero tradicional u otras criptomonedas como *Bitcoin* o *Ethereum*. Los *tokens* son vendidos como "futuras" unidades de la moneda cuando la ICO llegue a su objetivo y el proyecto se lance. En algunos casos como *Ethereum* los *tokens* son requeridos por el sistema. Una ICO puede ser una fuente de capital para una startup.​ Las ICOs pueden permitir a las startup evitar la ley e intermediarios como bancos y bolsas de valores​. Las ICOs pueden caer fuera de las regulaciones existentes, dependiendo de la naturaleza del proyecto, o ser prohibidas todas juntas en algunas jurisdicciones, como en China o Corea del Sur.
+
+Otros *smart contracts* se emplean para realizar una trazabilidad de algunos productos de comercio internacional como alimentos, medicamentos, vehículos e incluso contenedores llenos de mercancía, como es el caso de la empresa *Maersk*, que traza el envío de su cadena de suministro de envíos por todo el mundo a través de un protocolo *Blockchain* denominado *TradeLens* desarrollado e impulsado por *IBM*.
+
+Existen otras plataformas diferentes a las anteriormente vistas como *EOS*, *Cardano* o *Tezos*, que también implementan funcionalidades de *smart contracts* en sus protocolos.
 
 ## Lenguajes en Bitcoin, *Ethereum* y otros derivados
 
@@ -224,14 +255,23 @@ Este *script* introducirá diferentes datos en una pila que inicialmente está v
 <p align="center"><img src="img/timechain_15.png"></p>
 <br>
 
-Como se puede observar, este lenguaje basado en pila funciona mediante una serie de instrucciones denominadas *OP_CODES* de forma muy similar a como lo hace el lenguaje ensamblador.
+Como se puede observar, este lenguaje basado en pila funciona mediante una serie de instrucciones denominadas *OP_CODES* de forma muy similar a como lo hace el lenguaje ensamblador. Un ejemplo de cómo se vería un script o smart contract en lenguaje Bitcoin Script es el siguiente:
+
+<p align="center"><img src="img/timechain_22.png"></p>
+<br>
+
 Si se quisiera indagar más en el estudio y comprensiń de este lenguaje y su funcionamiento detallado está disponible un paper en GitHub con más información.
 
 ### Solidity
-xxx
+
+El lenguaje empleado en la plataforma Ethereum es Solidity. Se trata de un lenguaje turing-complete, orientado a objetos, con tipos de datos complejos y posee atributos de la programación orientada a objetos como son la encapsulación, herencia y poliformismo. Puede usar librerías de terceros y permite añadir cierta complejidad a su código. Se emplea en el desarrollo de smart contracts. Un ejemplo de cómo se vería un smart contract en lenguaje Solidity es el siguiente:
+
+<p align="center"><img src="img/timechain_23.png"></p>
+<br>
+
+La mayoría de estos smart contracts se desarrollan para la creación de tokens con fines de financiación de ICOs, pero también se desarrollan para otros fines no lucrativos ni comerciales como pueden ser sistemas de votación, compras a distancias más seguras o canales de micropagos.
 
 ### Bytecode
-xxx
 
 <p align="center"><img width=650 src="img/timechain_16.png"></p>
 <br>
