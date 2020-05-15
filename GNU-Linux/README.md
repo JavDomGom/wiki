@@ -5,43 +5,38 @@
 GNU, también conocido como GNU/Linux o Linux sin más, es un sistema operativo de tipo Unix, así como una gran colección de programas informáticos que componen al sistema, desarrollado por Richard Stallman para el Proyecto GNU y auspiciado por la Free Software Foundation. Está formado por software libre, mayoritariamente bajo términos de copyleft. GNU es el acrónimo recursivo de "GNU's Not Unix" (en español: GNU no es Unix), nombre elegido debido a que GNU sigue un diseño tipo Unix y se mantiene compatible con éste, pero se distingue de Unix por ser software libre y por no contener código de Unix.
 
 El sobrenombre Linux es realmente el nombre del kernel o núcleo del sistema, es el principal responsable de facilitar a los distintos programas acceso seguro al hardware de la computadora o en forma básica, es el encargado de gestionar recursos, a través de servicios de llamada al sistema. Muchas personas se refieren al sistema operativo simplemente con el nombre “Linux”, y aunque es aceptado realmente es inexacto e injusto, el nombre del sistema es GNU, pero se acepta igualmente llamarlo GNU/Linux, pues ambos forman un sistema operativo completo y funcional.
+
 ## Acceso al sistema
 
 ### Protocolo SSH
 
-Una de las grandes ventajas de utilizar la terminal es que podemos acceder a terminales en otros ordenadores muy fácilmente. El protocolo más utilizado para acceder a terminales de forma remota es SSH (Secure SHell). El protocolo SSH tiene un gran número de posibilidades, pero el uso más habitual es utilizarlo para abrir terminales en ordenadores remotos que tienen un servicio ssh. Este protocolo SSH es seguro porque cifra las comunicaciones entre el cliente y el servidor. Se diseñó como una alternativa segura a telnet. No debemos usar el protocolo telnet porque las comunicaciones en telnet, incluidas las claves de acceso, no están cifradas y cualquiera puede tener acceso a ellas.
-Para acceder a una computadora que implemente el protocolo SSH podemos usar el programa ssh, pero previamente tenemos que tener una cuenta en esa computadora. Imaginemos que Alice tiene una cuenta en un ordenador que tiene un servicio ssh. Para conectarse puede hacer:
+Una de las grandes ventajas de utilizar la terminal es que podemos acceder a terminales en otros servidores muy fácilmente. El protocolo más utilizado para acceder a terminales de forma remota es SSH (Secure SHell). El protocolo SSH tiene un gran número de posibilidades, pero el uso más habitual es utilizarlo para abrir terminales en servidores remotos que tienen un servicio ssh. Este protocolo SSH es seguro porque cifra las comunicaciones entre el cliente y el servidor. Se diseñó como una alternativa segura a telnet. No debemos usar el protocolo telnet porque las comunicaciones en telnet, incluidas las claves de acceso, no están cifradas y cualquiera puede tener acceso a ellas.
+Para acceder a una computadora que implemente el protocolo SSH podemos usar el programa ssh, pero previamente tenemos que tener una cuenta en esa computadora. Imaginemos que Alice tiene una cuenta en un servidor que tiene un servicio ssh. Para conectarse puede hacer:
 
 ```bash
-~$ ssh alice@ordenador
+~$ ssh alice@servidor
 ```
 
-En este ejemplo podemos cambiar ordenador por la dirección IP o el nombre de la computadora a la que nos queremos conectar. Si el nombre de la cuenta de usuario (alice) en el ordenador cliente y en el servidor es el mismo podemos obviar el nombre de usuario, de modo que se podría hacer la conexión SSH de la siguiente manera:
+En este ejemplo podemos cambiar servidor por la dirección IP o el nombre de la computadora a la que nos queremos conectar. Si el nombre de la cuenta de usuario (alice) en el servidor cliente y en el servidor es el mismo podemos obviar el nombre de usuario, de modo que se podría hacer la conexión SSH de la siguiente manera:
 
 ```bash
-~$ ssh ordenador
+~$ ssh servidor
 ```
-A continuación el servidor nos pedirá la clave correspondiente al usuario con el que nos queremos conectar. Existen clientes SSH para Windows con los que nos podemos conectar. Uno muy común es putty y otro mejor aún es MobaXterm.
+A continuación el servidor nos pedirá la clave correspondiente al usuario con el que nos queremos conectar.
 
-Una tarea muy habitual cuando estamos trabajando en un ordenador remoto es enviar o traer ficheros desde el mismo. Esto también lo podemos hacer utilizando el protocolo SSH por lo que podremos hacerlo de un modo seguro en cualquier ordenador que no dé acceso SSH. El programa más sencillo para hacerlo desde Unix o GNU/Linux es scp (Secure Copy Protocol). El comando scp tiene una interfaz muy similar a cp pero acepta que los ficheros de origen y destino estén en distintos ordenadores:
+Podemos incorporar algunas opciones adicionales como `ServerAliveInterval` para indicar un número de segundos que el cliente esperará antes de enviar un paquete nulo al servidor con el objetivo de mantener viva la conexión, esto puede venirnos muy bien en aquellas conexiones a servidores en los que si no realiza ninguna acción durante un periodo de tiempo se pierde la conexión. Un ejemplo de uso sería:
 
 ```bash
-~$ scp alice@ordenador:/remote/directory/file.txt /local/directory
+~$ ssh -o ServerAliveInterval=10 alice@servidor
 ```
 
-```bash
-~$ scp /local/directory/file.txt alice@ordenador:/remote/directory/
-```
+En este ejemplo se enviará un paquete nulo cada 10 segundos, para que no se pierda la conexión automáticamente tras un tiempo. Es una manera de indicarle al servidor que seguimos ahí.
 
-En Windows también hay distintos clientes SCP, uno de ellos es WinSCP.
-
-### Protocolo SFTP
-
-xxx
+Existen clientes SSH para Windows con los que nos podemos conectar. Uno muy común es [PuTTY](https://www.putty.org/) y otro un poco más completo es [MobaXterm](https://mobaxterm.mobatek.net/).
 
 ## Manejo del sistema a través de la Shell o terminal
 
-La Shell (o terminal) es un intérprete de comandos. Es simplemente un modo alternativo de controlar un ordenador basado en una interfaz de texto. La terminal nos permite ejecutar software escribiendo el nombre del programa que queremos ejecutar en la terminal. Podemos pedirle al ordenador que ejecute un programa mediante el ratón haciendo click en distintos lugares del escritorio o podemos escribir una orden para conseguir el mismo objetivo. Ninguna de las dos formas de comunicarse con el ordenador es mejor que la otra aunque en ciertas ocasiones puede resultar más conveniente utilizar una u otra. Las ventajas de la línea de comandos son:
+La Shell (o terminal) es un intérprete de comandos. Es simplemente un modo alternativo de controlar un servidor basado en una interfaz de texto. La terminal nos permite ejecutar software escribiendo el nombre del programa que queremos ejecutar en la terminal. Podemos pedirle al servidor que ejecute un programa mediante el ratón haciendo click en distintos lugares del escritorio o podemos escribir una orden para conseguir el mismo objetivo. Ninguna de las dos formas de comunicarse con el servidor es mejor que la otra aunque en ciertas ocasiones puede resultar más conveniente utilizar una u otra. Las ventajas de la línea de comandos son:
 
 Necesidad. Existe mucho software que está sólo disponible en la terminal. Esto es especialmente cierto en el área de la administración de sistemas y ciberseguridad.
 Flexibilidad. Los programas gráficos suelen ser muy adecuados para realizar la tarea para la que han sido creados, pero son difíciles de adaptar para otras tareas. Los programas diseñados para ser usados en la línea de comandos suelen ser muy versátiles.
@@ -57,13 +52,13 @@ Para usar la línea de comandos hay que abrir una terminal. Se abrirá una venta
 usuario $
 ```
 
-Este pequeño mensaje se denomina prompt y el cursor parpadeante que aparece junto al él indica que el ordenador está esperando una orden. El mensaje exacto que aparece en el prompt puede variar ligeramente, pero en sistemas GNU/Linux suele ser similar a:
+Este pequeño mensaje se denomina prompt y el cursor parpadeante que aparece junto al él indica que el servidor está esperando una orden. El mensaje exacto que aparece en el prompt puede variar ligeramente, pero en sistemas GNU/Linux suele ser similar a:
 
 ```
-usuario@ordenador:~$
+usuario@servidor:~$
 ```
 
-En el prompt se nos muestra el nombre del usuario, el nombre del ordenador y el directorio en el que nos encontramos actualmente, es decir, el directorio de trabajo actual. La virgulilla “~” significa que estás en tu home o en tu carpeta de usuario. Finalmente aparece el símbolo del dólar “$” como final del prompt y luego el cursor que parpadea, desde donde podremos escribir comandos. Cuando el prompt se muestra podemos ejecutar cualquier comando.
+En el prompt se nos muestra el nombre del usuario, el nombre del servidor y el directorio en el que nos encontramos actualmente, es decir, el directorio de trabajo actual. La virgulilla “~” significa que estás en tu home o en tu carpeta de usuario. Finalmente aparece el símbolo del dólar “$” como final del prompt y luego el cursor que parpadea, desde donde podremos escribir comandos. Cuando el prompt se muestra podemos ejecutar cualquier comando.
 
 ## Comandos básicos
 
@@ -76,7 +71,7 @@ Mediante el comando ls (LiSt) podemos pedir que liste el contenido del directori
 archivo_1.txt archivo_2.txt directorio_1 directorio_2  directorio_3
 ```
 
-El comando ls, como cualquier otro comando, es en realidad un programa que el ordenador ejecuta. Cuando escribimos la orden (y pulsamos enter) el programa se ejecuta. Mientras el programa está ejecutándose el prompt desaparece y no podemos ejecutar ningún otro comando. Pasado el tiempo el programa termina su ejecución y el prompt vuelve a aparecer. En el caso del comando ls el tiempo de ejecución es tan pequeño que suele ser imperceptible. Los programas suelen tener unas entradas y unas salidas. Dependiendo del caso estas pueden ser ficheros o caracteres introducidos o impresos en la pantalla. Por ejemplo, el resultado de ls es simplemente una lista impresa de ficheros y directorios en la interfaz de comandos.
+El comando ls, como cualquier otro comando, es en realidad un programa que el servidor ejecuta. Cuando escribimos la orden (y pulsamos enter) el programa se ejecuta. Mientras el programa está ejecutándose el prompt desaparece y no podemos ejecutar ningún otro comando. Pasado el tiempo el programa termina su ejecución y el prompt vuelve a aparecer. En el caso del comando ls el tiempo de ejecución es tan pequeño que suele ser imperceptible. Los programas suelen tener unas entradas y unas salidas. Dependiendo del caso estas pueden ser ficheros o caracteres introducidos o impresos en la pantalla. Por ejemplo, el resultado de ls es simplemente una lista impresa de ficheros y directorios en la interfaz de comandos.
 
 ### MKDIR
 
@@ -103,6 +98,8 @@ Y si queremos crear directorios con un permiso previamente especificado podremos
 drw------- 2 alice alice    4096 May 14 10:35 directorio_1
 ```
 
+Los permisos de los archivos y directorios es un tema que se abordará en detalle más adelante en la sección *Gestión de usuarios y permisos*.
+
 ### TOUCH
 
 Con el comando touch podremos crear archivos vacíos para su posterior edición, por ejemplo:
@@ -119,21 +116,21 @@ El ejemplo anterior generará un archivo llamado `archivo_1.txt` sin contenido. 
 
 ### CD
 
-El comando cd (change directory) nos servirá para cambiar de directorio. Por ejemplo, si queremos entrar en el directorio directorio_1 podremos hacerlo de la siguiente manera.
+El comando cd (change directory) nos servirá para cambiar de directorio. Por ejemplo, si queremos entrar en el directorio `directorio_1` podremos hacerlo de la siguiente manera.
 
 ```bash
 ~$ cd directorio_1
 ~/directorio_1$
 ```
 
-Si quisiéramos cambiarnos al directorio subdirectorio_1 volveríamos a ejecutar el comando cd pero esta vez indicando el nombre subdirectorio_1:
+Si quisiéramos cambiarnos al directorio `subdirectorio_1` volveríamos a ejecutar el comando cd pero esta vez indicando el nombre `subdirectorio_1`:
 
 ```
 ~/directorio_1$ cd subdirectorio_1/
 ~/directorio_1/subdirectorio_1$
 ```
 
-Si quisiéramos volver un directorio para atrás debemos escribir dos puntos (..) de la siguiente manera:
+Si quisiéramos volver un directorio para atrás debemos escribir dos puntos (`..`) de la siguiente manera:
 
 ```
 ~/directorio_1/subdirectorio_1$ cd ..
@@ -147,9 +144,141 @@ También podemos utilizar rutas absolutas, por ejemplo:
 ~/directorio_1/subdirectorio_1$
 ```
 
+### RM y RMDIR
+
+El comando `rm` nos permite eliminar tanto ficheros como directorios del sistema. Hay que tener cuidado, ya que si borramos un fichero o directorio con este comando los elementos borrados no irán a una papelera de reciclaje como cuando se elimina de forma gráfica pulsando la tecla de borrar o mediante un menú interactivo con el ratón. Eliminar un archivo o directorio con `rm` supone eliminarlo del sistema y no se podrá recuperar (fácilmente). Para eliminar un fichero basta con ejecutar el siguiente comando:
+
+```bash
+~$ rm archivo_1.txt
+```
+
+Si queremos eliminar un directorio podremos hacerlo con el comando `rm` deberemos especificar el flag `-r` del siguiente modo:
+
+```bash
+~$ rm -r directorio_1
+```
+
+Otro modo de eliminar un directorio es utilizando el comando `rmdir` de la siguiente manera:
+
+```bash
+~$ rmdir directorio_1
+```
+
+En ambos casos se eliminará el directorio y todo su contenido de forma recursiva. Son comandos que hay que **utilizar con extremo cuidado**, podríamos perder información valiosa y podría ser muy complicado recuperarla.
+
+### MV
+
+El comando `mv` (MoVe) nos servira para mover un fichero o directorio de ubicación y también para renombrarlos. Por ejemplo, si queremos el fichero `archivo_1.txt` desde la carpeta `/home/alice` a la carpeta `/tmp` podremos hacerlo de la siguiente manera:
+
+```bash
+~$ mv /home/alice/archivo_1.txt /tmp
+```
+
+Lo mismo con el directorio `directorio_1`:
+
+```bash
+~$ mv /home/alice/directorio_1 /tmp
+```
+
+Si queremos renombrar un fichero o directorio basta con especificar primero la ubicación del elemento a renombrar y después especificar la misma ubicación pero con el nuevo nombre, por ejemplo:
+
+```bash
+~$ mv /home/alice/archivo_1.txt /home/alice/nuevo_nombre_del_archivo.txt
+```
+
+Si especificamos diferentes rutas en origen y destino se moverá el archivo o directorio y también se le cambiará el nombre, por ejemplo:
+
+```bash
+~$ mv /home/alice/archivo_1.txt /tmp/nuevo_nombre_del_archivo.txt
+```
+
+### PWD
+
+El comando `pwd` nos devolverá la ruta absoluta del directorio en el que nos encontramos actualmente, por ejemplo:
+
+```bash
+~$ pwd
+/home/alice
+```
+
+### FIND
+El comando `find` nos servirá para buscar archivos y directorios que cumplan una serie de requisitos como puede ser un nombre exacto, un patrón en el nombre, unos permisos concretos, un tamaño, fecha de creación, antigüedad, ubicación, etc específicos. A continuación algunos ejemplos de uso:
+
+Profundidad máxima:
+
+```bash
+~$ find /home/alice/* -maxdepth 2 -name "*.txt" -type d
+```
+
+Profundidad de un unico directorio:
+
+```bash
+~$ find /home/alice/* -prune -name "archivo*" -type d
+```
+
+Buscar un fichero en un directorio en concreto:
+
+```bash
+~$ find /tmp/example -name "nombre_del_archivo"
+```
+
+Buscar en todos los directorios a partir del directorio actual:
+
+```bash
+~$ find . -name "nombre_del_archivo"
+```
+
+Omitir todos los mensajes en los que dice que no tenemos permiso para buscar en esos directorios hay que ejecutar:
+
+```bash
+~$ find . -name 2>/dev/null "nombre_del_archivo"
+```
+
+Buscar archivos con dos patrones de búsqueda en el nombre, por ejemplo todos los archivos que tengan extensión `.txt` y `.pdf`:
+
+```bash
+~$ find . \( -name "*.txt" -o -name "*.pdf" \) -type f -ls
+```
+
+Buscar archivos con mas de tres días de antigüedad desde su creación:
+
+```bash
+~$ find . -name "*.txt" -mtime +3 -type f
+```
+
+Buscar archivos con mas de dos años de antigüedad y listarlos con un comando `ls -lrt`:
+
+```bash
+~$ find / -name "*" -mtime +730 -type f -exec ls -lrt {} \;
+```
+
+Buscar, y ejecutar un comando:
+
+```bash
+~$ find /tmp/example/mp3 -name "*.mp3" -type f -exec chmod 644 {} \;
+```
+
+Buscar archivos por tamaño, por ejemplo, todos los que su tamaño está entre 100k y 500k:
+
+```bash
+~$ find . -size +100k -a -size -500k
+```
+
+Buscar archivos y mostrar nombre del archivo, nombre con la ruta absoluta, usuario, grupo y permisos:
+
+```bash
+~$ find . -printf "%f %p %u %g %m\n"
+```
+
+Excluye todos los archivos que se encuentren en estos directorios en concreto:
+
+```bash
+~$ find /home/alice -type f -not -path "*example1/archivo*" -not -path "example3/archivo*"
+```
+
 ### DATE
 
-El comando date, si no se le pasa ninguna opción devuelve un formato de fecha y hora estándar como el siguiente:
+El comando `date`, si no se le pasa ninguna opción devuelve un formato de fecha y hora estándar como el siguiente:
 
 ```bash
 ~$ date
@@ -170,16 +299,28 @@ Si además quisiéramos añadir la hora, minutos y segundos bastaría con hacerl
 2020-05-01 10:55:45
 ```
 
-Otro formato interesante es obtener el formato de fecha epoch o Unix timestamp:
+Otro formato interesante es obtener el formato de fecha *epoch* o *Unix timestamp*:
 
 ```bash
 ~$ date '+%s'
 1588330643
 ```
 
+### PING
+
+xxx
+
+### MAN
+
+xxx
+
+### EXIT
+
+xxx
+
 ## Estructura de directorios y archivos
 
-Los sistemas de archivos tienen directorios en los que se organizan los archivos y estos directorios suelen estar organizados jerárquicamente. La jerarquía implica que un directorio puede contener subdirectorios. El directorio más alto en la jerarquía del que cuelgan todos los demás se denomina raíz (root). Este directorio raíz se representa con una barra “/” y sólo existe una jerarquía, es decir, sólo existe un directorio raíz, incluso aunque haya distintos discos duros en el ordenador. Dentro del directorio raíz podemos encontrar diversos subdirectorios, por ejemplo en GNU/Linux existe el directorio “home”. Así pues, el directorio “home” es un subdirectorio del directorio raíz “/”. Esta relación se representa como:
+Los sistemas de archivos tienen directorios en los que se organizan los archivos y estos directorios suelen estar organizados jerárquicamente. La jerarquía implica que un directorio puede contener subdirectorios. El directorio más alto en la jerarquía del que cuelgan todos los demás se denomina raíz (root). Este directorio raíz se representa con una barra “/” y sólo existe una jerarquía, es decir, sólo existe un directorio raíz, incluso aunque haya distintos discos duros en el servidor. Dentro del directorio raíz podemos encontrar diversos subdirectorios, por ejemplo en GNU/Linux existe el directorio “home”. Así pues, el directorio “home” es un subdirectorio del directorio raíz “/”. Esta relación se representa como:
 
 ```
 /home
@@ -192,7 +333,7 @@ home es el directorio dónde se encuentran los directorios de los usuarios en un
 /home/alice
 ```
 
-Existe un estándar, denominado Filesystem Hierarchy Standard que define la estructura de directorios de los sistemas Unix. Los sistemas Unix y GNU/Linux suelen seguir este estándar, aunque a veces lo violan en algunos aspectos. Por ejemplo en el sistema MacOS X de Apple el directorio donde se encuentran los directorios de los usuarios se denomina “Users” y no “home”. En el directorio raíz hay diversos directorios que, en la mayoría de los casos, sólo deberían interesarnos si estamos administrando el ordenador. Los usuarios normalmente sólo escriben dentro de un directorio de su propiedad localizado dentro de “/home” y denominado como su nombre de usuario. Los usuarios también pueden escribir en “/tmp” aunque normalmente son los procesos lanzados por estos lo que hacen esta escritura. Es importante revisar el espacio libre en la partición en la que se encuentra “/tmp” para que no se colapse el sistema. Recuerda que el directorio “/tmp” es borrado habitualmente por el sistema.
+Existe un estándar, denominado Filesystem Hierarchy Standard que define la estructura de directorios de los sistemas Unix. Los sistemas Unix y GNU/Linux suelen seguir este estándar, aunque a veces lo violan en algunos aspectos. Por ejemplo en el sistema MacOS X de Apple el directorio donde se encuentran los directorios de los usuarios se denomina “Users” y no “home”. En el directorio raíz hay diversos directorios que, en la mayoría de los casos, sólo deberían interesarnos si estamos administrando el servidor. Los usuarios normalmente sólo escriben dentro de un directorio de su propiedad localizado dentro de “/home” y denominado como su nombre de usuario. Los usuarios también pueden escribir en “/tmp” aunque normalmente son los procesos lanzados por estos lo que hacen esta escritura. Es importante revisar el espacio libre en la partición en la que se encuentra “/tmp” para que no se colapse el sistema. Recuerda que el directorio “/tmp” es borrado habitualmente por el sistema.
 
 Los archivos pueden tener prácticamente cualquier nombre. Existe la convención de acabar los nombres con un punto y una pequeña extensión que indica el tipo de archivo. Pero esto es sólo una convención, en realidad podríamos no utilizar este tipo de nomenclatura. Si deseamos utilizar nombres de archivos que no vayan a causar extraños comportamientos en el futuro lo mejor sería seguir unas cuantas reglas al nombrar un archivo:
 
@@ -212,13 +353,108 @@ Otra convención utilizada en los sistema Unix es la de ocultar los archivos cuy
 ..  archivo_2.txt  .bashrc       directorio_2  .profile
 ```
 
+## Empaquetado y compresión de ficheros y subdirectorios
+
+### TAR
+
+xxx
+
+### GZIP
+
+xxx
+
+## Transferencia de archivos
+
+Una tarea muy habitual cuando estamos trabajando en un servidor remoto es enviar o traer ficheros desde el mismo. Esto también lo podemos hacer utilizando el protocolo SSH por lo que podremos hacerlo de un modo seguro en cualquier servidor que no dé acceso SSH.
+
+### SCP
+
+El programa más sencillo para hacerlo desde Unix o GNU/Linux es `scp` (*Secure Copy Protocol*). El comando `scp` tiene una interfaz muy similar a `cp` pero acepta que los ficheros de origen y destino estén en distintos servidores:
+
+```bash
+~$ scp alice@servidor:/remote/directory/file.txt /local/directory
+```
+
+```bash
+~$ scp /local/directory/file.txt alice@servidor:/remote/directory/
+```
+
+Hay varios clientes SCP de entorno gráfico para Windows (y otros sistemas como Mac y GNU/Linux), uno de los más populares es [WinSCP](https://winscp.net/eng/download.php).
+
+### SFTP
+
+Otro programa muy utilizado para transferir archivos entre varias computadoras Unix o GNU/Linux es `sftp` (*Secure File Tranfer Protocol*). El programa `sftp` realiza todas las operaciones en una sesión `ssh` cifrada. Utiliza muchas de las características de `ssh`, como la autenticación de clave pública y la compresión de datos.
+
+Hay varias formas básicas de usar `sftp`. Una de ellas es una sesión interactiva. En este modo, `sftp` se conecta y registra en la máquina remota especificada donde podremos escribir varios comandos en un shell específica. Por ejemplo:
+
+```bash
+~$ sftp alice@servidor
+```
+
+Al pulsar intro nos pedirá introducir la contraseña. Una vez dentro accederemos a un *prompt* del programa `sftp` que tendrá el siguiente aspecto:
+
+```bash
+~$ sftp alice@123.123.123.123
+Connected to 123.123.123.123.
+sftp>
+```
+
+En esta shell de `sftp` podremos escribir algunso comandos para listar archivos, enviarlos desde nuestra máquina al servidor remoto o traerlos desde el servidor remoto a nuestra máquina, entre muchas otras acciones. Por ejemplo, para listar los archivos que tenemos en local, es decir en nuestra máquina, podríamos hacerlo con el comando `lls` (*local list*) en la shell de `sftp` de la siguiente forma:
+
+```bash
+sftp> lls
+fichero_local1.txt  fichero_local2.txt  fichero_local3.txt
+```
+
+Para listar los archivos remotos podríamso hacerlo con el comando `ls` tal y como lo haríamos en una shell de Unix o GNU/Linux, por ejemplo:
+
+```bash
+sftp> ls
+fichero_remoto1.txt  fichero_remoto2.txt  fichero_remoto3.txt
+```
+
+Para traernos un fichero remoto a nuestra máquina local podemos usar el comando `get` especificando el fichero remoto que queremos traer, por ejemplo:
+
+```bash
+sftp> get fichero_remoto1.txt
+Fetching /home/alice/fichero_remoto1.txt to fichero_remoto1.txt
+/home/alice/fichero_remoto1.txt                 100%   22     1.2KB/s   00:00
+```
+
+Y para enviar un fichero desde nuestra máquina local hasta el servidor remoto podemos hacerlo con el comando `put` especificando el fichero local que queremos enviar, por ejemplo:
+
+```bash
+sftp> put fichero_local1.txt
+Uploading fichero_local1.txt to /home/alice/fichero_local1.txt
+fichero_local1.txt                              100%   12     1.3KB/s   00:00
+```
+Para salir de la shell `sftp` basta con escribir el comando `bye` o `exit`.
+
+```bash
+sftp> bye   
+```
+
+Otra manera de usar `sftp` es de un modo en el que no tengamos que entrar en una shell interactiva, sino indicarle al programa que simplemente queremos descargar un fichero desde el servidor remoto, es la siguiente:
+
+```bash
+~$ sftp alice@123.123.123.123:/home/alice/fichero_remoto1.txt
+Password:
+Connected to 123.123.123.123.
+Fetching /home/alice/fichero_remoto1.txt to fichero_remoto1.txt
+/home/alice/fichero_remoto1.txt                 100%   22     1.3KB/s   00:00
+```
+
+Enviar ficheros desde nuestra máquina local al servidor remoto de esta manera es un poco más complicado, ya que tendríamos que hacerlo mediante el flag `-b` y pasarle un *batchfile* que contenga todos los comandos de la shell propia de `sftp`.
+
+Existen varios clientes FTP y SFTP de entorno gráfico para sistemas Windows (y otros sistemas como Mac y GNU/Linux), uno de los más populares es  [Filezilla Client](https://filezilla-project.org/download.php?type=client).
+
 ## Gestión de usuarios y permisos
 
 Los sistemas Unix y GNU/Linux son multiusuario, es decir soportan que varios usuarios los utilicen simultáneamente. Todos los usuarios, excepto uno, tienen unos privilegios restringidos de base y no pueden modificar el sistema fácilmente. De este modo unos usuarios se ven protegidos de las acciones de los otros.
 
 Existe un usuario especial llamado root con privilegios de administración absolutos sobre el sistema. Para realizar las tareas cotidianas no es recomendable acceder al sistema como root. En algunos sistemas GNU/Linux este usuario está deshabilitado por defecto y sólo se pueden adquirir los privilegios de administrador temporalmente.
 
-Para conseguir que cada usuario pueda trabajar en sus archivos, pero que no pueda interferir accidental o deliberadamente con los archivos de otros usuarios se establece un sistema de permisos. Por defecto un usuario tiene permiso para leer y modificar sus propios archivos y directorios, pero no los de los demás. En los sistemas GNU/Linux los ficheros pertenecen a un usuario concreto y existen unos permisos diferenciados para este usuario y para el resto. Además el usuario pertenece a un grupo de trabajo. Por ejemplo, imaginemos que el usuario alice puede pertenecer al grupo “claseuno”. Si alice crea un fichero este tendrá unos permisos diferentes para alice, para el resto de miembros de su grupo y para el resto de usuarios del ordenador. Podemos ver los permisos asociados a los ficheros utilizando el comando ls con la opción -l (Long):
+Para conseguir que cada usuario pueda trabajar en sus archivos, pero que no pueda interferir accidental o deliberadamente con los archivos de otros usuarios se establece un sistema de permisos. Por defecto un usuario tiene permiso para leer y modificar sus propios archivos y directorios, pero no los de los demás. En los sistemas GNU/Linux los ficheros pertenecen a un usuario concreto y existen unos permisos diferenciados para este usuario y para el resto. Además el usuario pertenece a un grupo de trabajo. Por ejemplo, imaginemos que el usuario alice puede pertenecer al grupo “claseuno”. Si alice crea un fichero este tendrá unos permisos diferentes para alice, para el resto de miembros de su grupo y para el resto de usuarios del servidor. Podemos ver los permisos asociados a los ficheros utilizando el comando ls con la opción -l (Long):
 
 ```bash
 ~$ ls -l
@@ -237,7 +473,7 @@ En este caso, los ficheros listados pertenecen al usuario alice y al grupo clase
 drwxrwxr-x
 ```
 
-La primera letra indica el tipo de fichero listado: (d) directorio, (-) fichero u otro tipo especial. Las siguientes nueve letras muestran, en grupos de tres, los permisos para el usuario, para el grupo y para el resto de usuarios del ordenador. Cada grupo de tres letras indica los permisos de lectura (Read), escritura (Write) y ejecución (eXecute). En el caso anterior el usuario alice tiene permiso de lectura y escritura (rw-), el grupo tiene permiso de lectura y escritura también (rw-), es decir puede modificar el fichero o el directorio, y el resto de usuarios solo tienen permisos de lectura (r--). En los ficheros normales el permiso de lectura indica si el fichero puede ser leído, el de escritura si puede ser modificado y el de ejecución si puede ser ejecutado. En el caso de los directorios el de escritura indica si podemos añadir o borrar ficheros del directorio y el de ejecución si podemos listar los contenidos del directorio.
+La primera letra indica el tipo de fichero listado: (d) directorio, (-) fichero u otro tipo especial. Las siguientes nueve letras muestran, en grupos de tres, los permisos para el usuario, para el grupo y para el resto de usuarios del servidor. Cada grupo de tres letras indica los permisos de lectura (Read), escritura (Write) y ejecución (eXecute). En el caso anterior el usuario alice tiene permiso de lectura y escritura (rw-), el grupo tiene permiso de lectura y escritura también (rw-), es decir puede modificar el fichero o el directorio, y el resto de usuarios solo tienen permisos de lectura (r--). En los ficheros normales el permiso de lectura indica si el fichero puede ser leído, el de escritura si puede ser modificado y el de ejecución si puede ser ejecutado. En el caso de los directorios el de escritura indica si podemos añadir o borrar ficheros del directorio y el de ejecución si podemos listar los contenidos del directorio.
 
 Estos permisos pueden ser modificados con la instrucción chmod. En chmod cada grupo de usuarios se representa por una letra:
 
