@@ -308,15 +308,95 @@ Otro formato interesante es obtener el formato de fecha *epoch* o *Unix timestam
 
 ### PING
 
-xxx
+El comando `ping` es una herramienta de diagnóstico que permite hacer una verificación del estado de una determinada conexión de un host local con al menos un equipo remoto contemplado en una red de tipo TCP/IP. Sirve para determinar si una dirección IP específica o host es accesible desde la red o no. Por ejemplo, si queremos saber si el host `gnu.org` está "vivo" o accesible podríamos ejecutar el quigiente comando:
+
+```bash
+~$ ping gnu.org
+PING gnu.org (209.51.188.148) 56(84) bytes of data.
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=1 ttl=50 time=113 ms
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=2 ttl=50 time=113 ms
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=3 ttl=50 time=113 ms
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=4 ttl=50 time=112 ms
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=5 ttl=50 time=113 ms
+...
+--- gnu.org ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4001ms
+rtt min/avg/max/mdev = 112.955/113.390/113.739/0.419 ms
+```
+
+Con el flag `-c` podremos especificar el número de paquetes a enviar en la conexión, por ejemplo:
+
+```bash
+~$ ping -c 3 gnu.org
+PING gnu.org (209.51.188.148) 56(84) bytes of data.
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=1 ttl=50 time=114 ms
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=2 ttl=50 time=113 ms
+64 bytes from wildebeest.gnu.org (209.51.188.148): icmp_seq=3 ttl=50 time=113 ms
+
+--- gnu.org ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 113.178/113.779/114.600/0.601 ms
+```
+En realidad tiene muchas más opciones que nos permitirán hacer un uso más avanzado de este comando. También podemos hacer `ping` a la dirección IP a la que apunta el dominio `gnu.org`, en este caso la IP `209.51.188.148`:
+
+```bash
+~$ ping -c 3 209.51.188.148
+PING 209.51.188.148 (209.51.188.148) 56(84) bytes of data.
+64 bytes from 209.51.188.148: icmp_seq=1 ttl=50 time=113 ms
+64 bytes from 209.51.188.148: icmp_seq=2 ttl=50 time=112 ms
+64 bytes from 209.51.188.148: icmp_seq=3 ttl=50 time=113 ms
+
+--- 209.51.188.148 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 112.941/113.111/113.339/0.167 ms
+```
 
 ### MAN
 
-xxx
+El comando `man` (MANual) nos servirá para acceder a al manual o documentación de los diferentes programas que tengamos instalados en la computadora, solo hay que pasarle el nombre del programa como argumento apra acceder a su documentación, por ejemplo, para acceder a la documentación del comando `ping` tendremos que excribir el siguiente comando:
+
+```bash
+~$ man ping
+```
+
+Al pulsar intro accederemos a una página en la shell como esta:
+
+```bash
+PING(8)                      System Managers Manual: iputils
+
+NAME
+       ping - send ICMP ECHO_REQUEST to network hosts
+
+SYNOPSIS
+       ping  [-aAbBdDfhLnOqrRUvV46]  [-c count] [-F flowlabel] [-i interval] [-I interface] [-l preload] [-m mark] [-M pmtudisc_option] [-N nodeinfo_option] [-w deadline] [-W timeout] [-p pattern] [-Q tos]
+       [-s packetsize] [-S sndbuf] [-t ttl] [-T timestamp option] [hop ...] destination
+
+DESCRIPTION
+       ping uses the ICMP protocols mandatory ECHO_REQUEST datagram to elicit an ICMP ECHO_RESPONSE from a host or gateway.  ECHO_REQUEST datagrams (pings) have an IP and ICMP header,  followed  by  a
+       struct timeval and then an arbitrary number of pad bytes used to fill out the packet.
+
+       ping works with both IPv4 and IPv6. Using only one of them explicitly can be enforced by specifying -4 or -6.
+
+       ping can also send IPv6 Node Information Queries (RFC4620).  Intermediate hops may not be allowed, because IPv6 source routing was deprecated (RFC5095).
+
+OPTIONS
+       -4     Use IPv4 only.
+
+       -6     Use IPv6 only.
+
+       -a     Audible ping.
+...
+```
+
+Si la página de documentación es muy larga podremos bajar con el scroll, con las flechas del teclado o pulsando la barra espaciadora. Para salir de la página de un manual solo hay que pulsar la letra `q`.
 
 ### EXIT
 
-xxx
+El comando `exit` lo utilizaremos para salir de un programa, en ocasiones el programa es la propia ejecución de la shell en la que estamos trabajando, lo que quiere decir que si escribimos el comando èxit y pulsamos intro se cerrará la consola o terminal.
+
+```bash
+~$ exit
+```
 
 ## Estructura de directorios y archivos
 
@@ -477,16 +557,16 @@ La primera letra indica el tipo de fichero listado: (d) directorio, (-) fichero 
 
 Estos permisos pueden ser modificados con la instrucción chmod. En chmod cada grupo de usuarios se representa por una letra:
 
-* u: usuario dueño del fichero
-* g: grupo de usuarios del dueño del fichero
-* o: todos los otros usuarios
+* `u`: usuario dueño del fichero
+* `g`: grupo de usuarios del dueño del fichero
+* `o`: todos los otros usuarios
 * a: todos los tipos de usuario (dueño, grupo y otros)
 
 Los tipos de permisos también están abreviados por letras:
 
-* r: lectura
-* w: escritura
-* x: ejecución
+* `r`: lectura
+* `w`: escritura
+* `x`: ejecución
 
 Con estas abreviaturas podemos modificar los permisos existentes, por ejemplo, para hacer un fichero ejecutable:
 
@@ -507,9 +587,9 @@ También podemos mediante chmod indicar los permisos para un tipo de usuario det
 ```
 
 Un modo algo menos intuitivo, pero más útil de utilizar chmod es mediante los números octales que representan los permisos.
-* Lectura: 4
-* Escritura: 2
-* Ejecución: 1
+* Lectura: `4`
+* Escritura: `2`
+* Ejecución: `1`
 
 Para modificar los permisos de este modo debemos indicar el número octal que queremos que represente los permisos del fichero. La primera cifra representará al dueño, la segunda al grupo y la tercera al resto de usuarios. Por ejemplo si queremos que único permiso para el dueño y su grupo sea la lectura y que no haya ningún permiso para el resto de usuarios:
 
@@ -670,5 +750,19 @@ Te mostrará un error por pantalla ya que la orden no existe (command not found)
 El error ahora no se muestra por pantalla, como si nada pasara; se guarda en el archivo error.txt.
 
 ## Instalación de paquetes
+
+### TREE
+
+xxx
+
+### GPG
+
+xxx
+
+### GIT
+
+xxx
+
+### DOCKER
 
 xxx
