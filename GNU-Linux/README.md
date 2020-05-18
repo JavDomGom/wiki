@@ -353,7 +353,7 @@ rtt min/avg/max/mdev = 112.941/113.111/113.339/0.167 ms
 
 ### MAN
 
-El comando `man` (MANual) nos servirá para acceder a al manual o documentación de los diferentes programas que tengamos instalados en la computadora, solo hay que pasarle el nombre del programa como argumento apra acceder a su documentación, por ejemplo, para acceder a la documentación del comando `ping` tendremos que excribir el siguiente comando:
+El comando `man` (MANual) nos servirá para acceder a al manual o documentación de muchos de los programas que tengamos instalados en la computadora, solo hay que pasarle el nombre del programa como argumento apra acceder a su documentación, por ejemplo, para acceder a la documentación del comando `ping` tendremos que excribir el siguiente comando:
 
 ```bash
 ~$ man ping
@@ -389,6 +389,8 @@ OPTIONS
 ```
 
 Si la página de documentación es muy larga podremos bajar con el scroll, con las flechas del teclado o pulsando la barra espaciadora. Para salir de la página de un manual solo hay que pulsar la letra `q`.
+
+**Nota**: No todos los programas tienen su documentación accesible mediante `man`, algunos tienen su propia documentación que se puede consultar con flags u opciones como `-h` o `--help`.
 
 ### EXIT
 
@@ -435,13 +437,94 @@ Otra convención utilizada en los sistema Unix es la de ocultar los archivos cuy
 
 ## Empaquetado y compresión de ficheros y subdirectorios
 
+### GZIP y GUNZIP
+
+El comando `gzip` lo utilizaremos para comprimir un archivo reduciendo así su tamaño y haciéndolo más ligero. Por ejemplo:
+
+```bash
+~$ gzip archivo_1.txt
+```
+
+Si listamos los archivos que hay en el directorio actual veremos que el archivo que hemos comprimido tiene el mismo nombre y además extensión `.gz`, y ya no veremos el archivo original.
+
+```bash
+alice@localhost:~$ ls -lrt
+-rw-rw-r-- 1 alice alice    34 May 17 10:25 archivo_1.txt.gz
+```
+Si queremos que además de comprimir un archivo este permanezca en el mismo directorio sin comprimir podremos utilizar el flag `-k` (keep) del siguiente modo:
+
+```bash
+~$ gzip -k archivo_1.txt
+```
+
+Y si queremos la mayor compresión posible podremos utilizar el flag `-9`, por ejemplo:
+
+```bash
+~$ gzip -9 archivo_1.txt
+```
+
+Para descomprimir un archivo con extensión `.gz` podremos hacerlo con el comando `gunzip` del siguiente modo:
+
+```bash
+~$ gunzip archivo_1.txt.gz
+```
+
 ### TAR
 
-xxx
+El comando `tar` nos permite empaquetar (no comprimir) un conjunto de archivos y directorios. Por ejemplo, si queremos empaquetar un único archivo con extensión `.tar` todos los archivos que tengan extensión `.txt` que existan en el directorio actual podríamos hacerlo con el siguiente comando:
 
-### GZIP
+```bash
+~$ tar -cf archivos_empaquetados.tar *.txt
+```
 
-xxx
+En este caso usamos los flags `-cf` (*create*, *file*) para crear un nuevo archivo `.tar` que empaquete los archivos que le hemos indicado. Si listamos el contenido del directorio actual veremos que los archivos originales siguen donde están y además sse ha creado un archivo nuevo llamado `archivos_empaquetados.tar`.
+
+```bash
+~$ ls -lrt
+-rw-rw-r-- 1 alice alice     0 May 17 10:25 archivo_3.txt
+-rw-rw-r-- 1 alice alice     0 May 17 10:25 archivo_2.txt
+-rw-rw-r-- 1 alice alice     0 May 17 10:25 archivo_1.txt
+-rw-rw-r-- 1 alice alice 10240 May 17 10:26 archivos_empaquetados.tar
+```
+
+Para desempaquetar los archivos podemos hacerlo de la siguiente forma:
+
+```bash
+~$ tar -xf archivos_empaquetados.tar
+```
+
+Esto volverá a colocar los archivos previamente empaquetados en el directorio en el que nos encontremos. Si los archivos ya existen, como es el caso de este ejmplo, los archivos se sobreescribirán. Si queremos desempaquetar los archivos en otro directorio podremos especificar dicho directorio de salida mediante el flag `-C` de la siguiente manera:
+
+```bash
+~$ tar -xf archivos_empaquetados.tar -C /tmp
+```
+
+Puedes listar el contenido del directorio que hayas elegido, en este ejemplo el directorio `/tmp`, para ver quos archivos que empaquetamos antes están ahí:
+
+```bash
+~$ ls -lrt /tmp
+-rw-rw-r-- 1 alice alice    0 May 17 10:25 archivo_3.txt
+-rw-rw-r-- 1 alice alice    0 May 17 10:25 archivo_2.txt
+-rw-rw-r-- 1 alice alice    0 May 17 10:25 archivo_1.txt
+```
+
+El comando `tar` nos permite combinar la función de empaquetado con la de compresión mediante el los flags `-zcf`, por ejemplo:
+
+```bash
+~$ tar -zcf archivos_empaquetados.tar.gz *.txt
+```
+
+Y con los flags `-zxf` podremos desempaquetar y descomprimir, ambas cosas a la vez:
+
+```bash
+~$ tar -zxf archivos_empaquetados.tar.gz
+```
+
+Existen muchas otras opciones que te permiten utilizar el comando `tar` con más precisión. Para ver la documentación basta con escribir la opción `--help` de la siguiente manera:
+
+```bash
+~$ tar --help
+```
 
 ## Transferencia de archivos
 
@@ -621,8 +704,135 @@ Las restricciones para los permisos no afectan al usuario root, el superusuario 
 
 ## Creación y edición de ficheros con “vi”
 
-En GNU/Linux existen editores de texto que funcionan con entorno gráfico, como el gedit, KWrite o Leafpad, y editores que funcionan en la terminal, como el emacs, nano, vim o vi. El programa vi es un editor de texto potente y versátil que ya está instalado por defecto en la mayoría de las distribuciones de GNU/Linux. Vamos a ver cómo usar vi para crear o modificar archivos de texto, así como alguna de sus funcionalidades.
-xxx
+En GNU/Linux existen varios editores de texto que funcionan con entorno gráfico, como [gedit](https://es.wikipedia.org/wiki/Gedit), [KWrite](https://es.wikipedia.org/wiki/KWrite) o [Leafpad](https://es.wikipedia.org/wiki/Leafpad), y editores que funcionan en la terminal, como el [emacs](https://es.wikipedia.org/wiki/Emacs), [nano](https://es.wikipedia.org/wiki/GNU_Nano), [vim](https://es.wikipedia.org/wiki/Vim) o [vi](https://es.wikipedia.org/wiki/Vi). El programa `vi` es un editor de texto potente y versátil que ya está instalado por defecto en la mayoría de las distribuciones de GNU/Linux. Vamos a ver cómo usar `vi` para crear o modificar archivos de texto, así como alguna de sus funcionalidades. Para abrir un archivo de texto con `vi` basta con ejecutar el siguiente comando:
+
+```bash
+~$ vi fichero.txt
+```
+
+Si el archivo llamado `fichero.txt` no existe se creará como nuevo archivo, y si existe se abrirá para ver su contenido y podremos editarlo. En este ejemplo el archivo no existe y se creará, así que veremos en la consola lo siguiente:
+
+```bash
+░
+~
+~
+~
+~
+~
+"fichero.txt" [New File]
+```
+
+Para entrar en modo escritura o inserción debemos pulsar la letra `i` (insert), a continuación podremos escribir cualquier texto, por ejemplo `Hola mundo!`:
+
+```bash
+Hola mundo!░
+~
+~
+~
+~
+~
+"fichero.txt" [New File]
+```
+
+Para salir del modo edición o inserción debemos pulsar la tecla `esc`, y finalmente para guardar y deberemos escribir `:wq` (write & quit) y pulsar intro.
+
+Si listamos lso archivos que tenemos en la carpeta actual aparecerá el archivo `fichero.txt` que acabamos de crear:
+
+```bash
+~$ ls -lrt
+-rw-rw-r-- 1 alice alice 12 May 17 17:42 fichero.txt
+```
+
+Si lo vemos su contenido con el comando `cat` veremos que se ha guardado con éxito el texto que hemos escrito desde el editor `vi`:
+
+```bash
+~$ cat fichero.txt
+Hola mundo!
+```
+
+Ahora vamos a editarlo, volvemos a abrirlo con `vi`:
+
+```bash
+~$ vi fichero.txt
+```
+
+Veremos el archivo de la siguiente manera:
+
+```bash
+Hola mundo!
+~
+~
+~
+~
+~
+"fichero.txt" 1 line, 12 characters
+```
+
+Ahora puedes desplazar el cursor por la única línea de texto que hay, la línea 1, con las flechas izquierda y derecha del teclado. Estás en modo lectura, pero si quisieras entrar en modo edición tendrías que pulsar la tecla `i` (insert). Si quisieramos añadir texto a continuación del último carácter, antes de pulsar la `i` (si ya la has pulsado debes pulsar `esc`) puedes desplazarte con la felcha derecha hasta el final, o pulsar `$` apra ir automáticamente al final de una línea. Con el cursor situado en el último carácter pulsa `a` y se desplazará un carácter a la derecha en modo inserción. A continuación pulsamos un intro para escribir una segunda línea, y en esta escribiremos el mensaje `Estoy editando con vi.`:
+
+```bash
+Hola mundo!
+Estoy editando con vi.
+~
+~
+~
+~
+"fichero.txt" 1 line, 12 characters
+```
+
+Una vez más, para salir del modo inserción pulsamos `esc` y escribimos `:wq` (write & quit) pulsando finalmente intro. Ahora ya sabemos cómo abrir un archivo con `vi` y añadir texto en él nos estaremos preguntando cómo podemos borrar una letra, una palabra o una línea entera. Para practicarlo vamos a abrir de nuevo el archivo con `vi` y nos posicionamos al inicio de la segunda línea con el cursor:
+
+```bash
+Hola mundo!
+Estoy editando con vi.
+~
+~
+~
+~
+"fichero.txt" 2 lines, 35 characters
+```
+
+Ahora nos vamos con el cursor a la derecha hasta posicionarnos en la `e` de la palabra `editando`. Vamos a borrar esta palabra y escribir en su lugar la palabra `escribiendo`. Para borrar un carácter en `vi` pulsaremos la tecla `x`, no hace falta entrar en modo inserción, pues vamos a borrar no insertar. Pulsaremos la `x` ocho veces hasta haber borrado todos los carácteres de la palabra `editando`.
+
+```bash
+Hola mundo!
+Estoy ░con vi.
+~
+~
+~
+~
+"fichero.txt" 2 lines, 35 characters
+```
+
+Ahora es cuando tenemos que pulsar `i` para entrar en modo inserción y escribir la palabra `escribiendo`. Finalmente pulsamos `esc` para salir del modo inserción y escribimos `:wq` e intro para guardar y salir.
+
+```bash
+Hola mundo!
+Estoy escribiendo░con vi.
+~
+~
+~
+~
+"fichero.txt" 2 lines, 35 characters
+```
+
+Podemos volver a abrir el archivo con `cat` para comprobar que lo hemos editado correctamente:
+
+```bash
+~$ cat fichero.txt
+Hola mundo!
+Estoy escribiendo con vi.
+```
+
+En `vi` existen varias combinaciones de teclas y comandos que nos permiten ejecutar acciones más avanzadas como por ejemplo eliminar una línea entera de principio a fin, para ello solo hay que posicionarse en la línea a borrar y pulsar `dd`. Otra función interesante es la de eliminar todas las líneas del archivo, por lo que puedes posicionarte al inicio de la primera línea y pulsar `dG`. También se pueden escribir comandos un poco más complejos como el reemplazo de una cadena por otra en todos los casos en los que aparezca la expresión a sustituir, por ejemplo escribiendo el siguiente comando dentro de `vi`:
+
+```bash
+:1,$ s/cadena1/cadena2/g
+```
+
+Esto cambiará automáticamente la cadena de texto `cadena1` en todos lo lugares del archivo donde lo encuentre por la cadena de texto `cadena2`.
+
+Realmente crear y editar archivos de texto con `vi` puede resultar un poco complicado al principio, pues todo son comandos y atajos de teclado, pero hay que tener en cuenta que es un programa de edición de texto en una terminal, no en modo gráfico al que quizás mucha gente pueda estar acostumbrada.
 
 ## Gestión de procesos
 
@@ -702,7 +912,54 @@ Estando dentro de la aplicación, presionando “h“ se accede a una ayuda de l
 
 ## Ejecución de programas ShellScript
 
-xxx
+Un programa ShellScript es un programa pensado para ser ejecutado en una terminal o shell de Unix o GNU/Linux, es básicamente un intérprete de línea de comandos. Por ejemplo, podríamos hacer un script muy básico llamado `mi_primer_script.sh` que ejecute una única línea en la que se listasen todos los archivos del directorio en el que nos encontramos, por ejemplo:
+
+```bash
+#!/bin/bash
+
+ls -lrt
+```
+
+En este ejemplo encontramos como primera línea `#!/bin/bash`, es la declaración del intérprete de comandos que se desea utilizar en su ejecución. Los dos primeros carácteres se denominan [Shebang](https://es.wikipedia.org/wiki/Shebang) y a continuación viene la ruta absoluta del ejecutable o intérprete, en este caso `/bin/bash`, pero podría ser otro como `/bin/ksh`, `/bin/sh`, `/usr/bin/awk`, etc. Nosotros usuaremos para los ejemplo siempre `/bin/bash`.
+
+La siguiente línea es una simple línea de comandos shell, solo que la hemos escrito en un archivo. Se ejecutará igual que si lo tecleamos en la terminal. Para poder ejecutar nuestro primer script antes deberemos darle permisos de ejecución y para ello será necesario escribir el siguiente comando:
+
+```bash
+~$ chmod 700 mi_primer_script.sh
+```
+
+Ahora ya podremos ejecutarlo como un programa, la sintaxis para ejecutarlo es la siguiente:
+
+```bash
+~$ ./mi_primer_script.sh
+```
+
+Tendremos como resultado un listado de archivos que se encuentran en el directorio en el que estamos, en este caso únicamente el propio script:
+
+```bash
+-rwx------ 1 alice alice  8 May 18 11:15 mi_primer_script.sh
+```
+
+Ahora probemos a modificar nuestro script y añadamos las siguientes líneas haciéndo así el programa un poquito más complejo:
+
+```bash
+#!/bin/bash
+
+for i in {1..5}
+do
+    echo "Ahora i vale: $i"
+done
+```
+
+Este programa simplemente imprime un mensaje un número de veces, concretamente 5 veces, y en cada iteración la variable `$i` se va teniendo un valor distinto. Imprime el siguiente mensaje por pantalla:
+
+```bash
+Ahora i vale: 1
+Ahora i vale: 2
+Ahora i vale: 3
+Ahora i vale: 4
+Ahora i vale: 5
+```
 
 ## Entrada, salida y error standard de datos (stdin/stdout/stderr)
 
@@ -751,13 +1008,465 @@ El error ahora no se muestra por pantalla, como si nada pasara; se guarda en el 
 
 ## Instalación de paquetes
 
+La instalación de paquetes, librerías o programas desde la terminal o consola la haremos con la utilidad `apt-get`, pero antes deberemos actualizar la lista de paquetes disponibles en los repositorios que tenemos configurados en nuestro sistema. Para ello ejecutaremos el siguiente comando antes de instalar un paquete:
+
+```bash
+~$ apt-get update
+root@localhost:~# apt-get update
+Get:1 http://archive.ubuntu.com/ubuntu xenial InRelease [247 kB]
+Get:2 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]       
+Get:3 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]           
+Get:4 http://archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]                   
+Get:5 http://archive.ubuntu.com/ubuntu xenial/main amd64 Packages [1,201 kB]                 
+Get:6 http://archive.ubuntu.com/ubuntu xenial/main i386 Packages [1,196 kB]                   
+Get:7 http://archive.ubuntu.com/ubuntu xenial/main Translation-en [568 kB]                                          
+Get:8 http://archive.ubuntu.com/ubuntu xenial/restricted amd64 Packages [8,344 B]       
+Get:9 http://archive.ubuntu.com/ubuntu xenial/restricted i386 Packages [8,684 B]
+Get:10 http://archive.ubuntu.com/ubuntu xenial/restricted Translation-en [2,908 B]
+Get:11 http://archive.ubuntu.com/ubuntu xenial/universe amd64 Packages [7,532 kB]     
+Get:12 http://archive.ubuntu.com/ubuntu xenial/universe i386 Packages [7,512 kB]       
+Get:13 http://security.ubuntu.com/ubuntu xenial-security/main amd64 Packages [864 kB]
+Get:14 http://archive.ubuntu.com/ubuntu xenial/universe Translation-en [4,354 kB]             
+Get:15 http://archive.ubuntu.com/ubuntu xenial/multiverse amd64 Packages [144 kB]                          
+Get:16 http://archive.ubuntu.com/ubuntu xenial/multiverse i386 Packages [140 kB]            
+Get:17 http://archive.ubuntu.com/ubuntu xenial/multiverse Translation-en [106 kB]           
+Get:18 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 Packages [1,149 kB]             
+Get:19 http://archive.ubuntu.com/ubuntu xenial-updates/main i386 Packages [923 kB]            
+Get:20 http://archive.ubuntu.com/ubuntu xenial-updates/main Translation-en [434 kB]         
+Get:21 http://archive.ubuntu.com/ubuntu xenial-updates/restricted amd64 Packages [7,616 B]        
+Get:22 http://archive.ubuntu.com/ubuntu xenial-updates/restricted i386 Packages [7,580 B]    
+Get:23 http://archive.ubuntu.com/ubuntu xenial-updates/restricted Translation-en [2,272 B]   
+Get:24 http://archive.ubuntu.com/ubuntu xenial-updates/universe amd64 Packages [798 kB]            
+Get:25 http://archive.ubuntu.com/ubuntu xenial-updates/universe i386 Packages [721 kB]      
+Get:26 http://archive.ubuntu.com/ubuntu xenial-updates/universe Translation-en [334 kB]          
+Get:27 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 Packages [17.1 kB]   
+Get:28 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse i386 Packages [16.3 kB]
+Get:29 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse Translation-en [8,632 B]
+Get:30 http://archive.ubuntu.com/ubuntu xenial-backports/main amd64 Packages [7,280 B]        
+Get:31 http://archive.ubuntu.com/ubuntu xenial-backports/main i386 Packages [7,288 B]   
+Get:32 http://archive.ubuntu.com/ubuntu xenial-backports/main Translation-en [4,456 B]  
+Get:33 http://archive.ubuntu.com/ubuntu xenial-backports/universe amd64 Packages [8,064 B]    
+Get:34 http://archive.ubuntu.com/ubuntu xenial-backports/universe i386 Packages [7,744 B]
+Get:35 http://archive.ubuntu.com/ubuntu xenial-backports/universe Translation-en [4,328 B]
+Get:36 http://security.ubuntu.com/ubuntu xenial-security/main i386 Packages [660 kB]          
+Get:37 http://security.ubuntu.com/ubuntu xenial-security/main Translation-en [325 kB]
+Get:38 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 Packages [491 kB]
+Get:39 http://security.ubuntu.com/ubuntu xenial-security/universe i386 Packages [422 kB]
+Get:40 http://security.ubuntu.com/ubuntu xenial-security/universe Translation-en [201 kB]
+Get:41 http://security.ubuntu.com/ubuntu xenial-security/multiverse amd64 Packages [6,092 B]
+Get:42 http://security.ubuntu.com/ubuntu xenial-security/multiverse i386 Packages [6,248 B]
+Get:43 http://security.ubuntu.com/ubuntu xenial-security/multiverse Translation-en [2,888 B]
+Fetched 30.8 MB in 6s (4,825 kB/s)
+Reading package lists... Done
+```
+
+Ahora que ya tenemos todos los repositoriso actualizados podremos proceder a isnstalar los paquetes que tengamos disponibles. En los siguientes puntos veremos la instalación de algunos paquetes de ejemplo que nos pueden reultar bastante útiles para trabajar en un sistema GNU/Linux.
+
 ### TREE
 
-xxx
+Ell paquete tree es una utilidad que nos ayudará a listar de forma recursiva todos los archivos y directorios que hay en una ubicación específica, y lo hará en forma de árbol desglosado, bastante más visual para poder ver la jerarquía de archivos en toda su profundidad. Para instalarlo basta con escribir el siguiente comando:
+
+```bash
+~# apt-get install tree
+```
+
+Al pulsar intro se comenzará a instalar y veremos por pantalla unos mensajes como los siguientes:
+
+```bash
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  tree
+0 upgraded, 1 newly installed, 0 to remove and 18 not upgraded.
+Need to get 40.6 kB of archives.
+After this operation, 138 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu xenial/universe amd64 tree amd64 1.7.0-3 [40.6 kB]
+Fetched 40.6 kB in 0s (323 kB/s)
+Selecting previously unselected package tree.
+(Reading database ... 89411 files and directories currently installed.)
+Preparing to unpack .../tree_1.7.0-3_amd64.deb ...
+Unpacking tree (1.7.0-3) ...
+Setting up tree (1.7.0-3) ...
+```
+
+Una vez finalizada la instalación podremos probar a ejecutarlo de la siguiente manera:
+
+```bash
+~# tree /home/alice/
+/home/alice/
+├── archivo_01.txt
+├── archivo_02.txt
+├── archivo_03.txt
+└── directorio_1
+    ├── archivo_11.txt
+    ├── archivo_12.txt
+    ├── archivo_13.txt
+    └── directorio_2
+        ├── archivo21.txt
+        ├── archivo22.txt
+        ├── archivo23.txt
+        └── directorio_3
+            ├── archivo31.txt
+            ├── archivo32.txt
+            └── archivo33.txt
+
+3 directories, 12 files
+```
+
+Como se puede ver, la manera de listar los archivos y directorios es mucho mejor y se ve más claro. La utilidad o herramienta `tree` no viene instalada por defecto en el sistema GNU/Linux, por lo que si queremos utilizarla primero deberemos instalarla como ya hemos visto antes.
+
+Para eliminar `tree` del sistema basta con ejecutar el siguiente comando:
+
+```bash
+~# apt-get remove tree
+```
+
+Aparecenán unos mensajes como los siguientes y pedirá confirmación, deberemos pulsar `Y` e intro:
+
+```bash
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be REMOVED:
+  tree
+0 upgraded, 0 newly installed, 1 to remove and 18 not upgraded.
+After this operation, 138 kB disk space will be freed.
+Do you want to continue? [Y/n] Y
+(Reading database ... 89418 files and directories currently installed.)
+Removing tree (1.7.0-3) ...
+```
 
 ### GPG
 
-xxx
+**GNU Privacy Guard** ([GnuPG](https://gnupg.org/) o GPG) es una herramienta de cifrado y firmas digitales desarrollado por *Werner Koch*, que viene a ser un reemplazo del **Pretty Good Privacy** ([PGP](https://en.wikipedia.org/wiki/Pretty_Good_Privacy)) pero con la principal diferencia que es [Software Libre](https://en.wikipedia.org/wiki/Free_software) licenciado bajo licencia [GPLv3](https://en.wikipedia.org/wiki/GNU_General_Public_License#Version_3). GPG utiliza el estándar del IETF denominado [OpenPGP](https://en.wikipedia.org/wiki/Pretty_Good_Privacy#OpenPGP).
+
+Para `gpg` deberemos hacerlo mediante `apt` de la siguiente manera:
+```bash
+~# apt install gnupg
+```
+
+#### Crear un par de claves (publica/privada) nuevas
+
+1. Lo primero que debes hacer es generar un par de claves (pública/privada) asociados a tu nombre, apellidos y una dirección de email. El siguiente comando iniciará un diálogo interactivo que deberemos ir cumpliementando con nuestras preferencias y datos, por ejemplo:
+    ```bash
+    ~$ gpg --full-generate-key
+    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.
+
+    Por favor seleccione tipo de clave deseado:
+       (1) RSA y RSA (por defecto)
+       (2) DSA y ElGamal
+       (3) DSA (sólo firmar)
+       (4) RSA (sólo firmar)
+    Su elección: 1
+    ```
+    He elegido la opción 1, las claves RSA me valen perfectamente.
+
+    A continuación te pide la longitud de la clave, yo he elegido la longitud máxima, que es `4096` bytes:
+    ```bash
+    las claves RSA pueden tener entre 1024 y 4096 bits de longitud.
+    ¿De qué tamaño quiere la clave? (3072) 4096
+    El tamaño requerido es de 4096 bits
+    ```
+
+    Ahora toca elegir la caducidad de la clave, yo voy a elegir que no caduque nunca, opción `0` y confirmar con `s`:
+    ```bash
+    Por favor, especifique el período de validez de la clave.
+             0 = la clave nunca caduca
+          <n>  = la clave caduca en n días
+          <n>w = la clave caduca en n semanas
+          <n>m = la clave caduca en n meses
+          <n>y = la clave caduca en n años
+    ¿Validez de la clave (0)? 0
+    La clave nunca caduca
+    ¿Es correcto? (s/n) s
+    ```
+
+    Ahora hay que introducir un identificador de usuario, yo pondré mi nombre y apellidos (mejor caracteres ASCII, sin acentos ni caracteres especiales):
+    ```bash
+    GnuPG debe construir un ID de usuario para identificar su clave.
+
+    Nombre y apellidos: Javier Dominguez Gomez
+    ```
+
+    Dirección de email, esto es importante para asociar las claves a una cuenta de correo que luego podrán usar otras personas para comunicarse contigo de forma más segura:
+    ```bash
+    Dirección de correo electrónico: jdg@member.fsf.org
+    ```
+
+    También un comentario, es opcional, puedes poner algo que te identifique o dejarlo en blanco, yo pondré un mensaje para que se vea cómo quedaría:
+    ```bash
+    Comentario: With Free Software you have freedom!
+    ```
+
+    Finalmente nos hace un resumen de nuestras elecciones y nos permite modificarlas o confirmarlas. Si todo está bien podemos pulsar `V` e *intro*:
+    ```bash
+    Ha seleccionado este ID de usuario:
+        "Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>"
+
+    ¿Cambia (N)ombre, (C)omentario, (D)irección o (V)ale/(S)alir? V
+    ```
+    Al pulsar *intro* nos pedirá añadir un *passphrase* o contraseña. **Esta contraseña es importantísima**, es la que no debemos olvidar jamás, ya que se utilizará para cifrar y descifrar con nuestra clave privada. Pedirá introducirla dos veces. Si la perdemos u olvidamos ya no podremos descrifrar nuca más la información que fuera cifrada anteriormente.
+
+    En este momento se estará generando la clave, para ello empleará varios bytes "aleatorios" que podremos generar con el simple hecho de mover el raton por la pantalla. Hay que hacerlo durante unos pocos segundos hasta que se devuelva el prompt de la consola:
+    ```bash
+    Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
+    alguna otra tarea (trabajar en otra ventana/consola, mover el ratón, usar
+    la red y los discos) durante la generación de números primos. Esto da al
+    generador de números aleatorios mayor oportunidad de recoger suficiente
+    entropía.
+    Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
+    alguna otra tarea (trabajar en otra ventana/consola, mover el ratón, usar
+    la red y los discos) durante la generación de números primos. Esto da al
+    generador de números aleatorios mayor oportunidad de recoger suficiente
+    entropía.
+    gpg: clave DFCD16F1B1958BAD marcada como de confianza absoluta
+    gpg: certificado de revocación guardado como '/home/jdg/.gnupg/openpgp-revocs.d/AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD.rev'
+    claves pública y secreta creadas y firmadas.
+
+    pub   rsa4096 2020-05-08 [SC]
+          AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD
+    uid                      Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
+    sub   rsa4096 2020-05-08 [E]
+    ```
+
+2. Para asegurarme de si se ha creado bien mi clave pública la listo con el siguiente comando:
+    ```bash
+    ~$ gpg -k jdg@member.fsf.org
+    pub   rsa4096 2020-05-08 [SC]
+          AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD
+    uid        [  absoluta ] Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
+    sub   rsa4096 2020-05-08 [E]
+    ```
+
+3. También la clave privada:
+    ```bash
+    ~$ gpg -K jdg@member.fsf.org
+    sec   rsa4096 2020-05-08 [SC]
+          AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD
+    uid        [  absoluta ] Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
+    ssb   rsa4096 2020-05-08 [E]
+    ```
+
+_**Nota**: Esta par de claves que acabo de generar son solo una demo para esta sección de este tutorial. En las siguiente secciones utilizaré como ejemplo mis claves reales que no tienen por que tener las mismas opciones._
+
+#### Exportar mi clave pública
+
+1. Una vez generes tu par de claves (pública/privada) es muy importante que exportes tu clave pública para compartirla con los demás, con cuanta más gente mejor. Realmente no hay nada malo en que personas desconocidas tiengan tu clave pública, todo lo contrario, puede ser muy beneficioso hacer que tu clave pública esté disponible y que las personas puedan encontrar fácilmente tu clave para comunicarse contigo de una forma más segura, cuanto antes mejor. Para exportar tu propia clave pública basta con ejecutar el siguiente comando (*en este ejemplo aparece mi clave pública truncada ya que es muy larga; la clave completa está [aquí](jdg-pubkey.txt)*):
+    ```bash
+    ~$ gpg --export --armor jdg@member.fsf.org
+    -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+    mQINBFljzlYBEAD2uxIRG7e/kLjlErBVn1V+pVPRCNQ0emj2JYbsr+qUmB2VfULh
+    E/zQFimd2NCehijsiAQ/w0MrGtk+fw2LIAprU6+6Mi0fabMkQIP4E2+DFfLhps1u
+    o0ebw0VxRGfdW7GzQ85xaChi73P4kgYRT+8SE7M/CUwAH6FwTXQH2UTmrI4C4qGh
+    ...
+    ...
+    ...
+    yHdJLsA+ZpQiSIFgjFAX7YVFO/H1BQroOSp6sK4atzlRT+eP3+9zSj3nGri3Iavk
+    a3C0RYMEv+HI5gQgguyc
+    =2k8o
+    -----END PGP PUBLIC KEY BLOCK-----
+    ```
+
+2. Puedes ejecutar el comando anterior de la siguiente manera para que en vez de ver por pantalla la clave pública se vuelque en un fichero (opción `-o`) al que he llamado `jdg-pubkey.txt`:
+    ```bash
+    ~$ gpg --export --armor -o jdg-pubkey.txt jdg@member.fsf.org
+    ```
+
+3. Tanto si obtienes tu clave pública por pantalla en modo texto como si la vuelcas en un archivo, puedes compartirla con tus amigos, conocidos o con cualquier persona, enviándosela por mail o publicándola en algún servidor de claves como, como [Rediris](https://www.rediris.es/keyserver/) o [MIT PGP Key server](https://pgp.mit.edu/).
+
+4. Para publicar tu clave pública en un servidor de claves puedes hacerlo directamente desde la web del servidor que elijas, o bien puedes hacerlo desde línea de comandos pasándole el *key_id* de tu clave pública (los últimos 8 *bytes* de tu fingerprint) de la siguente forma:
+    ```bash
+    ~$ gpg --send-keys --keyserver pgp.mit.edu D6648E2B
+    gpg: enviando clave 5BDCC668D6648E2B a hkp://pgp.mit.edu
+    ```
+
+#### Importar clave pública de otra persona
+
+1. Primero hay que hacerse con la clave pública de la persona con la que quieres comunicarte utilizando GPG o PGP. hay que tener cuidado a la hora de obtener claves públicas a través de servidores de claves, es una opción pero no es la mejor opción, pues algunos podrían contener claves públicas falsas o de otras personas bajo tu nombre. En los siguientes puntos explico cómo verificar cual es la clave que realmente te interesa.
+
+2. Una vez que tenemos la clave pública de la persona en cuestión, hay que importarla mediante el siguiente comando:
+    ```bash
+    ~$ gpg --import rms-pubkey.txt
+    gpg: clave 2C6464AF2A8E4C02: clave pública "Richard Stallman <rms@gnu.org>" importada
+    gpg: Cantidad total procesada: 1
+    gpg:               importadas: 1
+    gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+    gpg: nivel: 0  validez:   7  firmada:   1  confianza: 0-, 0q, 0n, 0m, 0f, 7u
+    gpg: nivel: 1  validez:   1  firmada:   0  confianza: 0-, 0q, 0n, 0m, 1f, 0u
+    gpg: siguiente comprobación de base de datos de confianza el: 2020-10-18
+    ```
+
+3. Para estar realmente seguro de qué la clave pública que has importado es la de esa persona, se debe obtener el *fingerprint* o seguir una cadena de firmas de personas de confianza. Una manera fiable de obtener el *fingerprint* de una persona es dándola en mano, a través de una tarjeta o papel donde esté escrita. Esta práctica es muy habitual en una [Key Signing Party](https://es.wikipedia.org/wiki/Fiesta_de_firmado_de_claves).
+
+    <p align="center"><a src="img/gpg_00.png"><img width=425 src="img/gpg_00.png"></a>&nbsp;<a src="img/gpg_00.png"><img width=425 src="img/gpg_01.png"></a></p>
+    <br>
+
+4. Verificamos si el *fingerprint* que tenemos para comparar -*en este caso el que aparece en la tarjeta de RMS*-, coincide con el de la clave que acabamos de importar:
+    ```bash
+    ~$ gpg --fingerprint rms@gnu.org
+    pub   rsa4096 2013-07-20 [SC]
+          6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
+    uid        [desconocida] Richard Stallman <rms@gnu.org>
+    sub   rsa4096 2013-07-20 [E]
+    ```
+    Podemos ver que la confianza en esta clave pública aparece como `[desconocida]`.
+
+4. Si tras comprobar los *fingerprints* estos coinciden podríamos aumentar el nivel de confianza que tenemos con esa persona mediante el siguiente comando:
+    ```bash
+    ##~$ gpg --update-trustdb
+    gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+    gpg: nivel: 0  validez:   7  firmada:   2  confianza: 0-, 0q, 0n, 0m, 0f, 7u
+    No hay confianza definida para:
+    pub   rsa4096 2013-07-20 [SC]
+          "Richard Stallman <rms@gnu.org>"
+     Huella clave primaria: 6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
+
+    Por favor, decida su nivel de confianza en que este usuario
+    verifique correctamente las claves de otros usuarios (mirando
+    pasaportes, comprobando huellas dactilares en diferentes fuentes...)
+
+      1 = No lo sé o prefiero no decirlo
+      2 = NO tengo confianza
+      3 = Confío un poco
+      4 = Confío totalmente
+      s = saltar esta clave
+      q = salir
+
+    ¿Su decisión? 4
+    gpg: nivel: 1  validez:   2  firmada:   0  confianza: 0-, 0q, 0n, 0m, 2f, 0u
+    gpg: siguiente comprobación de base de datos de confianza el: 2020-10-18
+          67819B343B2AB70DED9320872C6464AF2A8E4C02
+    ```
+
+    Yo he elegido la opción `4`, puesto que tengo confianza total en esta clave pública, he comprobado rigurosamente con su dueño que esta clave le pertenece a él. Si volvemos a comprobar la clave pública veremos que el nivel de confianza ahora ha cambiado a `[   total   ]`.
+    ```bash
+    ~$ gpg --fingerprint rms@gnu.or
+    pub   rsa4096 2013-07-20 [SC]
+          6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
+    uid        [   total   ] Richard Stallman <rms@gnu.org>
+    ##sub   rsa4096 2013-07-20 [E]
+    ```
+
+5. También podemos firmar la clave que acabamos de importar. Firmar una clave significa que confías en la clave que se se te ha proporcionado y que has verificado que está asociada con la persona en cuestión. Para firmar una clave simplemente ejecutamos:
+    ```bash
+    ~$ gpg --sign-key rms@gnu.org
+
+    pub  rsa4096/2C6464AF2A8E4C02
+         creado: 2013-07-20  caduca: nunca       uso: SC  
+         confianza: desconocido   validez: desconocido
+    sub  rsa4096/2F30A2E162853425
+         creado: 2013-07-20  caduca: nunca       uso: E   
+    [desconocida] (1). Richard Stallman <rms@gnu.org>
+
+    pub  rsa4096/2C6464AF2A8E4C02
+         creado: 2013-07-20  caduca: nunca       uso: SC  
+         confianza: desconocido   validez: desconocido
+     Huella clave primaria: 6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
+
+         Richard Stallman <rms@gnu.org>
+
+    ##¿Está realmente seguro de querer firmar esta clave
+    con su clave: "Javier Dominguez Gomez <jdg@member.fsf.org>" (5BDCC668D6648E2B)?
+
+    ¿Firmar de verdad? (s/N) s
+    ```
+Tras pulsar intro GPG te pedirá que introduzcas la password de tu clave privada GPG. La introduces y pulsas intro de nuevo, ya habrías firmado la clave pública de tu amigo. Firmar la clave significa que verificas públicamente que confías en que la persona es quien dice ser. Esto puede ayudar a otras personas a decidir si confiar en esa persona también. Si alguien confía tí y ve que has firmado la clave de esta persona, es más probable que también confíe en su identidad.
+
+#### Cifrado simétrico de ficheros
+
+A continuación explico de forma muy breve cómo se cifra un archivo cualquiera empleando cifrado simétrico. En esta ocasión no hará falta utilizar un par de claves (pública/privada), solo una password.
+
+1. Para este ejemplo primero crearemos un archivo `prueba.txt` que contendrá la cadena de texto "*Hola*".
+    ```bash
+    ~$ echo "Hola" > prueba.txt
+    ~$ cat prueba.txt
+    Hola
+    ```
+
+2. Si queremos cifrar el archivo `prueba.txt` con un *passphrase* ejecutamos el siguiente comando sobre el archivo:
+    ```bash
+    ~$ gpg -o prueba.gpg -c prueba.txt
+    ```
+Nos pedirá insertar un *passphrase* para su cifrado.
+
+3. Debemos recordar este *passphrase* para luego descifrar nuestro archivo. La opción `-o` es para indicar el archivo de salida ya cifrado, y la opción `-c` es para indicar que se va a realizar un cifrado simétrico (por defecto AES128). Si se quisiera cambiar el tipo de cifrado se puede sustituir la opción `-c` por `--cipher-algo` y a continuación especificar el tipo de cifrado, por ejemplo:
+    ```bash
+    ~$ gpg -o prueba.gpg --cipher-algo AES256 prueba.txt
+    ```
+Los algoritmos de cifrado simétrico disponibles son: `IDEA`, `3DES`, `CAST5`, `BLOWFISH`, `AES`, `AES192`, `AES256`, `TWOFISH`, `CAMELLIA128`, `CAMELLIA192` y `CAMELLIA256`.
+
+4. Una vez hecho esto, se puede listar el contenido del directorio actual para ver lo que se ha generado.
+    ```bash
+    ~$ ls -lrt
+    -rw-rw-r-- 1 jdg jdg     5 may  5 17:53 prueba.txt
+    -rw-rw-r-- 1 jdg jdg    85 may  5 17:53 prueba.gpg
+    ```
+
+5. Si queremos ver qué contiene el archivo `prueba.gpg` generado veremos que ya no tiene el texto en claro y está cifrado.
+    ```bash
+    ~$ cat prueba.gpg
+    ??K0pF?%<??Z?8??>??Tgh???_u???O?
+    ????8a?
+    ```
+
+6. Ahora ya podemos guardar para nosotros mismos o hacer llegar el archivo a una persona que conozca la *passphrase* para descifrarlo, de un modo seguro y fiable. Para descifrar el archivo bastaría con ejecutar el siguiente comando:
+    ```bash
+    ~$ gpg -d prueba.gpg
+    gpg: datos cifrados AES
+    gpg: cifrado con 1 frase contraseña
+    Hola
+    ```
+Nos pedirá insertar un *passphrase* para descifrarlo, y si lo introducimos correctamente aparecerá el mensaje en claro que está en el archivo original.
+
+Si lo que se quiere cifrar es un conjunto de archivos y directorios bastaría con empaquetarlos y/o comprimirlos en un archivo, por ejemplo `.tar`, `.zip` `.gz`, etc, y repetir el proceso de esta guía.
+
+#### Cifrado asimétrico de ficheros con clave pública
+
+1. Para cifrar un archivo con clave pública se ha de ejecutar el siguiente comando:
+    ```bash
+    ~$ gpg -e -u ​"mi identificador"​ -r ​ "el del destinatario"​ prueba.txt
+    ```
+Por ejemplo:
+    ```bash
+    ~$ gpg -e -u ​"jdg@member.fsf.org"​ -r ​"rms@gnu.org"​ prueba.txt
+    ```
+Tras ejecutar este comando se generará un nuevo archivo `prueba.txt.gpg` que solo `rms@gnu.org` podrá descifrar con su clave privada, pues he utilizado su clave pública para cifrarlo.
+
+#### Eliminar claves
+
+Podemos eliminar claves públicas (la nuestra o las de otras personas) de nuestro anillo de confianza en GPG. Es importante tener en cuenta que si lo que queremos eliminar es una clave pública nuestra, si esta está asociada a una clave privada deberemos eliminar primero la clave privada, sino nos dará erroSi se trata de la clave pública de otra persona se peude borrar sin problemas sin tener que hacer nada antes.
+
+1. Para eliminar una clave privada basta con ejecutar el siguiente comando pasándole el *key_id* de tu clave pública (los últimos 8 *bytes* de tu fingerprint) de la siguente forma:
+    ```bash
+    ~$ gpg --delete-secret-key B1958BAD
+    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.
+
+    sec  rsa4096/DFCD16F1B1958BAD 2020-05-08 Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
+
+    ¿Eliminar esta clave del anillo? (s/N) s
+    ¡Es una clave secreta! ¿Eliminar realmente? (s/N) s
+    ```
+    GPG te preguntará varias veces si estás absolutamente convencido de querer eliminar una clave privada. Es muy importante estar seguro de querer borrarla, si se elimina ya no se podrá utilizar (a no ser que tengas un backup) para cifrar y descifrar mensajes, por lo que todo lo que tuvieras cifrado con esta clave se podría perder para siempre.
+
+2. Para eliminar una clave pública se puede hacer con el siguiente comando al que también hay que pasarle el *key_id* de tu clave pública (los últimos 8 *bytes* de tu fingerprint):
+    ```bash
+    $ gpg --delete-key B1958BAD
+    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.
+
+    pub  rsa4096/DFCD16F1B1958BAD 2020-05-08 Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
+
+    ¿Eliminar esta clave del anillo? (s/N) s
+    ```
+    En esta ocasión solo nos pedirá una única confirmación, pulsamos `s` e *intro*.
+
 
 ### GIT
 
