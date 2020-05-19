@@ -4,14 +4,14 @@
 
 GNU, también conocido como GNU/Linux o Linux sin más, es un sistema operativo de tipo Unix, así como una gran colección de programas informáticos que componen al sistema, desarrollado por Richard Stallman para el Proyecto GNU y auspiciado por la Free Software Foundation. Está formado por software libre, mayoritariamente bajo términos de copyleft. GNU es el acrónimo recursivo de "GNU's Not Unix" (en español: GNU no es Unix), nombre elegido debido a que GNU sigue un diseño tipo Unix y se mantiene compatible con éste, pero se distingue de Unix por ser software libre y por no contener código de Unix.
 
-El sobrenombre Linux es realmente el nombre del kernel o núcleo del sistema, es el principal responsable de facilitar a los distintos programas acceso seguro al hardware de la computadora o en forma básica, es el encargado de gestionar recursos, a través de servicios de llamada al sistema. Muchas personas se refieren al sistema operativo simplemente con el nombre “Linux”, y aunque es aceptado realmente es inexacto e injusto, el nombre del sistema es GNU, pero se acepta igualmente llamarlo GNU/Linux, pues ambos forman un sistema operativo completo y funcional.
+El sobrenombre Linux es realmente el nombre del kernel o núcleo del sistema, es el principal responsable de facilitar a los distintos programas acceso seguro al hardware de la computadora o en forma básica, es el encargado de gestionar recursos, a través de servicios de llamada al sistema. Muchas personas se refieren al sistema operativo simplemente con el nombre “Linux”, y aunque es aceptado realmente es inexacto e injusto, pues el nombre del sistema es realmente GNU, pero se acepta igualmente llamarlo GNU/Linux, ambos forman un sistema operativo completo y funcional.
 
 ## Acceso al sistema
 
 ### Protocolo SSH
 
-Una de las grandes ventajas de utilizar la terminal es que podemos acceder a terminales en otros servidores muy fácilmente. El protocolo más utilizado para acceder a terminales de forma remota es SSH (Secure SHell). El protocolo SSH tiene un gran número de posibilidades, pero el uso más habitual es utilizarlo para abrir terminales en servidores remotos que tienen un servicio ssh. Este protocolo SSH es seguro porque cifra las comunicaciones entre el cliente y el servidor. Se diseñó como una alternativa segura a telnet. No debemos usar el protocolo telnet porque las comunicaciones en telnet, incluidas las claves de acceso, no están cifradas y cualquiera puede tener acceso a ellas.
-Para acceder a una computadora que implemente el protocolo SSH podemos usar el programa ssh, pero previamente tenemos que tener una cuenta en esa computadora. Imaginemos que Alice tiene una cuenta en un servidor que tiene un servicio ssh. Para conectarse puede hacer:
+Una de las grandes ventajas de utilizar la terminal es que podemos acceder a terminales en otros servidores muy fácilmente. El protocolo más utilizado para acceder a terminales de forma remota es SSH (Secure SHell). El protocolo SSH tiene un gran número de posibilidades, pero el uso más habitual es utilizarlo para abrir terminales en servidores remotos que tienen un servicio SSH. Este protocolo SSH es seguro porque cifra las comunicaciones entre el cliente y el servidor. Se diseñó como una alternativa segura a telnet. No debemos usar el protocolo Telnet porque las comunicaciones en Telnet, incluidas las claves de acceso, no están cifradas y cualquiera puede tener acceso a ellas.
+Para acceder a una computadora que implemente el protocolo SSH podemos usar el programa ssh, pero previamente tenemos que tener una cuenta en esa computadora. Imaginemos que *Alice* tiene una cuenta en un servidor que tiene un servicio SSH. Para conectarse puede hacer:
 
 ```bash
 ~$ ssh alice@servidor
@@ -38,11 +38,11 @@ Existen clientes SSH para Windows con los que nos podemos conectar. Uno muy com�
 
 La Shell (o terminal) es un intérprete de comandos. Es simplemente un modo alternativo de controlar un servidor basado en una interfaz de texto. La terminal nos permite ejecutar software escribiendo el nombre del programa que queremos ejecutar en la terminal. Podemos pedirle al servidor que ejecute un programa mediante el ratón haciendo click en distintos lugares del escritorio o podemos escribir una orden para conseguir el mismo objetivo. Ninguna de las dos formas de comunicarse con el servidor es mejor que la otra aunque en ciertas ocasiones puede resultar más conveniente utilizar una u otra. Las ventajas de la línea de comandos son:
 
-Necesidad. Existe mucho software que está sólo disponible en la terminal. Esto es especialmente cierto en el área de la administración de sistemas y ciberseguridad.
-Flexibilidad. Los programas gráficos suelen ser muy adecuados para realizar la tarea para la que han sido creados, pero son difíciles de adaptar para otras tareas. Los programas diseñados para ser usados en la línea de comandos suelen ser muy versátiles.
-Reproducibilidad. Documentar y repetir el proceso seguido para realizar un análisis con un programa gráfico es muy costoso puesto que es difícil describir la secuencia de clicks y doble clicks que hemos realizado. Por el contrario, los procesos realizados mediante la línea de comandos son muy fáciles de documentar puesto que tan sólo debemos guardar el texto que hemos introducido en la pantalla.
-Fiabilidad. Los programas básicos de Unix fueron creados en los años 70 y han sido probados por innumerables usuarios por lo que se han convertido en piezas de código extraordinariamente confiables.
-Recursos. Las interfaces gráficas suelen consumir muchos recursos mientras que los programas que funcionan en línea de comandos suelen ser extraordinariamente livianos y rápidos. Este poco uso de recursos facilita, por ejemplo, que se utilice a través de la red.
+* **Necesidad**: Existe mucho software que está sólo disponible en la terminal. Esto es especialmente cierto en el área de la administración de sistemas y ciberseguridad.
+* **Flexibilidad**: Los programas gráficos suelen ser muy adecuados para realizar la tarea para la que han sido creados, pero son difíciles de adaptar para otras tareas. Los programas diseñados para ser usados en la línea de comandos suelen ser muy versátiles.
+* **Reproducibilidad**: Documentar y repetir el proceso seguido para realizar un análisis con un programa gráfico es muy costoso puesto que es difícil describir la secuencia de clicks y doble clicks que hemos realizado. Por el contrario, los procesos realizados mediante la línea de comandos son muy fáciles de documentar puesto que tan sólo debemos guardar el texto que hemos introducido en la pantalla.
+* **Fiabilidad**: Los programas básicos de Unix fueron creados en los años 70 y han sido probados por innumerables usuarios por lo que se han convertido en piezas de código extraordinariamente confiables.
+* **Recursos**: Las interfaces gráficas suelen consumir muchos recursos mientras que los programas que funcionan en línea de comandos suelen ser extraordinariamente livianos y rápidos. Este poco uso de recursos facilita, por ejemplo, que se utilice a través de la red.
 
 El problema de la terminal es que para poder utilizarla debemos saber previamente qué queremos hacer y cómo. Es habitual descubrir cómo funciona un programa con una interfaz gráfica sin tener que leer un manual, esto no sucede en la terminal.
 
@@ -71,7 +71,7 @@ Mediante el comando ls (LiSt) podemos pedir que liste el contenido del directori
 archivo_1.txt archivo_2.txt directorio_1 directorio_2  directorio_3
 ```
 
-El comando ls, como cualquier otro comando, es en realidad un programa que el servidor ejecuta. Cuando escribimos la orden (y pulsamos enter) el programa se ejecuta. Mientras el programa está ejecutándose el prompt desaparece y no podemos ejecutar ningún otro comando. Pasado el tiempo el programa termina su ejecución y el prompt vuelve a aparecer. En el caso del comando ls el tiempo de ejecución es tan pequeño que suele ser imperceptible. Los programas suelen tener unas entradas y unas salidas. Dependiendo del caso estas pueden ser ficheros o caracteres introducidos o impresos en la pantalla. Por ejemplo, el resultado de ls es simplemente una lista impresa de ficheros y directorios en la interfaz de comandos.
+El comando ls, como cualquier otro comando, es en realidad un programa que el servidor ejecuta. Cuando escribimos la orden (y pulsamos intro) el programa se ejecuta. Mientras el programa está ejecutándose el prompt desaparece y no podemos ejecutar ningún otro comando. Pasado el tiempo el programa termina su ejecución y el prompt vuelve a aparecer. En el caso del comando ls el tiempo de ejecución es tan pequeño que suele ser imperceptible. Los programas suelen tener unas entradas y unas salidas. Dependiendo del caso estas pueden ser ficheros o caracteres introducidos o impresos en la pantalla. Por ejemplo, el resultado de ls es simplemente una lista impresa de ficheros y directorios en la interfaz de comandos.
 
 ### MKDIR
 
@@ -168,7 +168,7 @@ En ambos casos se eliminará el directorio y todo su contenido de forma recursiv
 
 ### MV
 
-El comando `mv` (MoVe) nos servira para mover un fichero o directorio de ubicación y también para renombrarlos. Por ejemplo, si queremos el fichero `archivo_1.txt` desde la carpeta `/home/alice` a la carpeta `/tmp` podremos hacerlo de la siguiente manera:
+El comando `mv` (MoVe) nos servirá para mover un fichero o directorio de ubicación y también para renombrarlos. Por ejemplo, si queremos el fichero `archivo_1.txt` desde la carpeta `/home/alice` a la carpeta `/tmp` podremos hacerlo de la siguiente manera:
 
 ```bash
 ~$ mv /home/alice/archivo_1.txt /tmp
@@ -194,7 +194,7 @@ Si especificamos diferentes rutas en origen y destino se moverá el archivo o di
 
 ### PWD
 
-El comando `pwd` nos devolverá la ruta absoluta del directorio en el que nos encontramos actualmente, por ejemplo:
+El comando `pwd` (Print Working Directory) nos imprimirá por pantalla la ruta absoluta del directorio en el que nos encontramos actualmente, por ejemplo:
 
 ```bash
 ~$ pwd
@@ -202,30 +202,31 @@ El comando `pwd` nos devolverá la ruta absoluta del directorio en el que nos en
 ```
 
 ### FIND
+
 El comando `find` nos servirá para buscar archivos y directorios que cumplan una serie de requisitos como puede ser un nombre exacto, un patrón en el nombre, unos permisos concretos, un tamaño, fecha de creación, antigüedad, ubicación, etc específicos. A continuación algunos ejemplos de uso:
 
-Profundidad máxima:
+Buscar archivos con extensión `.txt` en una profundidad máxima de dos directorios:
 
 ```bash
 ~$ find /home/alice/* -maxdepth 2 -name "*.txt" -type d
 ```
 
-Profundidad de un unico directorio:
+Buscar archivos con que su nombre comience por `archivo` en una profundidad de un único directorio:
 
 ```bash
 ~$ find /home/alice/* -prune -name "archivo*" -type d
 ```
 
-Buscar un fichero en un directorio en concreto:
+Buscar un fichero llamado `mi_archivo` en el directorio `/tmp/example`:
 
 ```bash
-~$ find /tmp/example -name "nombre_del_archivo"
+~$ find /tmp/example -name "mi_archivo"
 ```
 
 Buscar en todos los directorios a partir del directorio actual:
 
 ```bash
-~$ find . -name "nombre_del_archivo"
+~$ find . -name "mi_archivo"
 ```
 
 Omitir todos los mensajes en los que dice que no tenemos permiso para buscar en esos directorios hay que ejecutar:
@@ -240,13 +241,13 @@ Buscar archivos con dos patrones de búsqueda en el nombre, por ejemplo todos lo
 ~$ find . \( -name "*.txt" -o -name "*.pdf" \) -type f -ls
 ```
 
-Buscar archivos con mas de tres días de antigüedad desde su creación:
+Buscar archivos con más de tres días de antigüedad desde su creación:
 
 ```bash
 ~$ find . -name "*.txt" -mtime +3 -type f
 ```
 
-Buscar archivos con mas de dos años de antigüedad y listarlos con un comando `ls -lrt`:
+Buscar archivos con más de dos años de antigüedad y listarlos con un comando `ls -lrt`:
 
 ```bash
 ~$ find / -name "*" -mtime +730 -type f -exec ls -lrt {} \;
@@ -308,7 +309,7 @@ Otro formato interesante es obtener el formato de fecha *epoch* o *Unix timestam
 
 ### PING
 
-El comando `ping` es una herramienta de diagnóstico que permite hacer una verificación del estado de una determinada conexión de un host local con al menos un equipo remoto contemplado en una red de tipo TCP/IP. Sirve para determinar si una dirección IP específica o host es accesible desde la red o no. Por ejemplo, si queremos saber si el host `gnu.org` está "vivo" o accesible podríamos ejecutar el quigiente comando:
+El comando `ping` es una herramienta de diagnóstico que permite hacer una verificación del estado de una determinada conexión de un host local con al menos un equipo remoto contemplado en una red de tipo TCP/IP. Sirve para determinar si una dirección IP específica o host es accesible desde la red o no. Por ejemplo, si queremos saber si el host `gnu.org` está "vivo" o accesible podríamos ejecutar el siguiente comando:
 
 ```bash
 ~$ ping gnu.org
@@ -337,6 +338,7 @@ PING gnu.org (209.51.188.148) 56(84) bytes of data.
 3 packets transmitted, 3 received, 0% packet loss, time 2002ms
 rtt min/avg/max/mdev = 113.178/113.779/114.600/0.601 ms
 ```
+
 En realidad tiene muchas más opciones que nos permitirán hacer un uso más avanzado de este comando. También podemos hacer `ping` a la dirección IP a la que apunta el dominio `gnu.org`, en este caso la IP `209.51.188.148`:
 
 ```bash
@@ -353,7 +355,7 @@ rtt min/avg/max/mdev = 112.941/113.111/113.339/0.167 ms
 
 ### MAN
 
-El comando `man` (MANual) nos servirá para acceder a al manual o documentación de muchos de los programas que tengamos instalados en la computadora, solo hay que pasarle el nombre del programa como argumento apra acceder a su documentación, por ejemplo, para acceder a la documentación del comando `ping` tendremos que excribir el siguiente comando:
+El comando `man` (MANual) nos servirá para acceder a al manual o documentación de muchos de los programas que tengamos instalados en la computadora, solo hay que pasarle el nombre del programa como argumento para acceder a su documentación, por ejemplo, para acceder a la documentación del comando `ping` tendremos que escribir el siguiente comando:
 
 ```bash
 ~$ man ping
@@ -394,7 +396,7 @@ Si la página de documentación es muy larga podremos bajar con el scroll, con l
 
 ### EXIT
 
-El comando `exit` lo utilizaremos para salir de un programa, en ocasiones el programa es la propia ejecución de la shell en la que estamos trabajando, lo que quiere decir que si escribimos el comando èxit y pulsamos intro se cerrará la consola o terminal.
+El comando `exit` lo utilizaremos para salir de un programa, en ocasiones el programa es la propia ejecución de la shell en la que estamos trabajando, lo que quiere decir que si escribimos el comando exit y pulsamos intro se cerrará la consola o terminal.
 
 ```bash
 ~$ exit
@@ -420,10 +422,12 @@ Existe un estándar, denominado Filesystem Hierarchy Standard que define la estr
 Los archivos pueden tener prácticamente cualquier nombre. Existe la convención de acabar los nombres con un punto y una pequeña extensión que indica el tipo de archivo. Pero esto es sólo una convención, en realidad podríamos no utilizar este tipo de nomenclatura. Si deseamos utilizar nombres de archivos que no vayan a causar extraños comportamientos en el futuro lo mejor sería seguir unas cuantas reglas al nombrar un archivo:
 
 Añadir una extensión para recordarnos el tipo de archivo, por ejemplo .txt para los archivos de texto.
+
 No utilizar en los nombres:
-    * espacios,
-    * caracteres no alfanuméricos,
-    * ni caracteres no ingleses como letras acentuadas o eñes.
+
+    * Espacios.
+    * Caracteres no alfanuméricos.
+    * Ni caracteres no ingleses como letras acentuadas o eñes.
 
 Por supuesto, podríamos crear un archivo denominado “$ñ 1.txt” para referirnos a un archivo de sonido, pero esto conlleva una serie de problemas que aunque son solventables nos dificultará el trabajo.
 Además es importante recordar que en Unix las mayúsculas y las minúsculas no son lo mismo. Los ficheros “documento.txt”, “Documento.txt” y “DOCUMENTO.TXT” son tres ficheros distintos.
@@ -451,6 +455,7 @@ Si listamos los archivos que hay en el directorio actual veremos que el archivo 
 alice@localhost:~$ ls -lrt
 -rw-rw-r-- 1 alice alice    34 May 17 10:25 archivo_1.txt.gz
 ```
+
 Si queremos que además de comprimir un archivo este permanezca en el mismo directorio sin comprimir podremos utilizar el flag `-k` (keep) del siguiente modo:
 
 ```bash
@@ -477,7 +482,7 @@ El comando `tar` nos permite empaquetar (no comprimir) un conjunto de archivos y
 ~$ tar -cf archivos_empaquetados.tar *.txt
 ```
 
-En este caso usamos los flags `-cf` (*create*, *file*) para crear un nuevo archivo `.tar` que empaquete los archivos que le hemos indicado. Si listamos el contenido del directorio actual veremos que los archivos originales siguen donde están y además sse ha creado un archivo nuevo llamado `archivos_empaquetados.tar`.
+En este caso usamos los flags `-cf` (*create*, *file*) para crear un nuevo archivo `.tar` que empaquete los archivos que le hemos indicado. Si listamos el contenido del directorio actual veremos que los archivos originales siguen donde están y además se ha creado un archivo nuevo llamado `archivos_empaquetados.tar`.
 
 ```bash
 ~$ ls -lrt
@@ -493,13 +498,13 @@ Para desempaquetar los archivos podemos hacerlo de la siguiente forma:
 ~$ tar -xf archivos_empaquetados.tar
 ```
 
-Esto volverá a colocar los archivos previamente empaquetados en el directorio en el que nos encontremos. Si los archivos ya existen, como es el caso de este ejmplo, los archivos se sobreescribirán. Si queremos desempaquetar los archivos en otro directorio podremos especificar dicho directorio de salida mediante el flag `-C` de la siguiente manera:
+Esto volverá a colocar los archivos previamente empaquetados en el directorio en el que nos encontremos. Si los archivos ya existen, como es el caso de este ejemplo, los archivos se sobreescribirán. Si queremos desempaquetar los archivos en otro directorio podremos especificar dicho directorio de salida mediante el flag `-C` de la siguiente manera:
 
 ```bash
 ~$ tar -xf archivos_empaquetados.tar -C /tmp
 ```
 
-Puedes listar el contenido del directorio que hayas elegido, en este ejemplo el directorio `/tmp`, para ver quos archivos que empaquetamos antes están ahí:
+Puedes listar el contenido del directorio que hayas elegido, en este ejemplo el directorio `/tmp`, para ver que los archivos que empaquetamos antes están ahí:
 
 ```bash
 ~$ ls -lrt /tmp
@@ -562,14 +567,14 @@ Connected to 123.123.123.123.
 sftp>
 ```
 
-En esta shell de `sftp` podremos escribir algunso comandos para listar archivos, enviarlos desde nuestra máquina al servidor remoto o traerlos desde el servidor remoto a nuestra máquina, entre muchas otras acciones. Por ejemplo, para listar los archivos que tenemos en local, es decir en nuestra máquina, podríamos hacerlo con el comando `lls` (*local list*) en la shell de `sftp` de la siguiente forma:
+En esta shell de `sftp` podremos escribir algunos comandos para listar archivos, enviarlos desde nuestra máquina al servidor remoto o traerlos desde el servidor remoto a nuestra máquina, entre muchas otras acciones. Por ejemplo, para listar los archivos que tenemos en local, es decir en nuestra máquina, podríamos hacerlo con el comando `lls` (*local list*) en la shell de `sftp` de la siguiente forma:
 
 ```bash
 sftp> lls
 fichero_local1.txt  fichero_local2.txt  fichero_local3.txt
 ```
 
-Para listar los archivos remotos podríamso hacerlo con el comando `ls` tal y como lo haríamos en una shell de Unix o GNU/Linux, por ejemplo:
+Para listar los archivos remotos podríamos hacerlo con el comando `ls` tal y como lo haríamos en una shell de Unix o GNU/Linux, por ejemplo:
 
 ```bash
 sftp> ls
@@ -591,6 +596,7 @@ sftp> put fichero_local1.txt
 Uploading fichero_local1.txt to /home/alice/fichero_local1.txt
 fichero_local1.txt                              100%   12     1.3KB/s   00:00
 ```
+
 Para salir de la shell `sftp` basta con escribir el comando `bye` o `exit`.
 
 ```bash
@@ -643,7 +649,7 @@ Estos permisos pueden ser modificados con la instrucción chmod. En chmod cada g
 * `u`: usuario dueño del fichero
 * `g`: grupo de usuarios del dueño del fichero
 * `o`: todos los otros usuarios
-* a: todos los tipos de usuario (dueño, grupo y otros)
+* `a`: todos los tipos de usuario (dueño, grupo y otros)
 
 Los tipos de permisos también están abreviados por letras:
 
@@ -670,6 +676,7 @@ También podemos mediante chmod indicar los permisos para un tipo de usuario det
 ```
 
 Un modo algo menos intuitivo, pero más útil de utilizar chmod es mediante los números octales que representan los permisos.
+
 * Lectura: `4`
 * Escritura: `2`
 * Ejecución: `1`
@@ -692,7 +699,7 @@ Permisos de lectura, escritura y ejecución para el dueño y su grupo y ninguno 
 ~$ chmod 770 fichero.txt
 ```
 
-Las restricciones para los permisos no afectan al usuario root, el superusuario del sistema. root también puede modificar el dueño y el grupo al que pertenecen los ficheros mediante los comando chown y chgrp.
+Las restricciones para los permisos no afectan al usuario root, el superusuario del sistema. root también puede modificar el dueño y el grupo al que pertenecen los ficheros mediante los comandos `chown` y `chgrp`.
 
 ```bash
 ~$ chown alice fichero.txt
@@ -736,7 +743,7 @@ Hola mundo!░
 
 Para salir del modo edición o inserción debemos pulsar la tecla `esc`, y finalmente para guardar y deberemos escribir `:wq` (write & quit) y pulsar intro.
 
-Si listamos lso archivos que tenemos en la carpeta actual aparecerá el archivo `fichero.txt` que acabamos de crear:
+Si listamos los archivos que tenemos en la carpeta actual aparecerá el archivo `fichero.txt` que acabamos de crear:
 
 ```bash
 ~$ ls -lrt
@@ -768,7 +775,7 @@ Hola mundo!
 "fichero.txt" 1 line, 12 characters
 ```
 
-Ahora puedes desplazar el cursor por la única línea de texto que hay, la línea 1, con las flechas izquierda y derecha del teclado. Estás en modo lectura, pero si quisieras entrar en modo edición tendrías que pulsar la tecla `i` (insert). Si quisieramos añadir texto a continuación del último carácter, antes de pulsar la `i` (si ya la has pulsado debes pulsar `esc`) puedes desplazarte con la felcha derecha hasta el final, o pulsar `$` apra ir automáticamente al final de una línea. Con el cursor situado en el último carácter pulsa `a` y se desplazará un carácter a la derecha en modo inserción. A continuación pulsamos un intro para escribir una segunda línea, y en esta escribiremos el mensaje `Estoy editando con vi.`:
+Ahora puedes desplazar el cursor por la única línea de texto que hay, la línea 1, con las flechas izquierda y derecha del teclado. Estás en modo lectura, pero si quisieras entrar en modo edición tendrías que pulsar la tecla `i` (insert). Si quisiéramos añadir texto a continuación del último carácter, antes de pulsar la `i` (si ya la has pulsado debes pulsar `esc`) puedes desplazarte con la flecha derecha hasta el final, o pulsar `$` para ir automáticamente al final de una línea. Con el cursor situado en el último carácter pulsa `a` y se desplazará un carácter a la derecha en modo inserción. A continuación pulsamos un intro para escribir una segunda línea, y en esta escribiremos el mensaje `Estoy editando con vi.`:
 
 ```bash
 Hola mundo!
@@ -839,8 +846,8 @@ Realmente crear y editar archivos de texto con `vi` puede resultar un poco compl
 Un proceso es una instancia de un programa en ejecución. Programas y procesos son entidades distintas. En un sistema operativo multitarea, múltiples instancias de un programa pueden ejecutarse simultáneamente. Cada instancia es un proceso separado.
 Prácticamente todo lo que se está ejecutando en el sistema en cualquier momento es un proceso, incluyendo la shell, el ambiente gráfico, que puede tener múltiples procesos, etc.
 
-GNU/Linux, como ya hemos visto, es un sistema operativo multitarea y multiusuario. Esto quiere decir que múltiples procesos pueden operar simultáneamente sin interferir unos con otros. Por ejemplo, si cinco usuarios desde equipos diferentes, ejecutan el mismo programa al mismo tiempo, habría cinco instancias del mismo programa, es decir, cinco procesos distintos.
-Cada proceso que se inicia es identificado con un número de identificación único conocido como PID (Process ID), que es siempre un número natural.
+GNU/Linux, como ya hemos visto, es un sistema operativo multitarea y multiusuario. Esto quiere decir que múltiples procesos pueden operar simultáneamente sin interferir unos con otros. Por ejemplo, si cinco usuarios desde equipos diferentes, ejecutan el mismo programa al mismo tiempo, habría cinco instancias del mismo programa, es decir, cinco procesos distintos. Cada proceso que se inicia es identificado con un número de identificación único conocido como PID (Process ID), que es siempre un número natural.
+
 Haciendo análisis muchas veces ejecutaremos programas, crearemos procesos, que duren un tiempo considerable. Es interesante que durante el tiempo que dure el proceso podamos consultar su estado. Los entornos UNIX y GNU/Linux tienen una serie de herramientas para poder conocer el estado de los procesos y del sistema en general.
 
 ### PS
@@ -912,7 +919,7 @@ Estando dentro de la aplicación, presionando “h“ se accede a una ayuda de l
 
 ## Ejecución de programas ShellScript
 
-Un programa ShellScript es un programa pensado para ser ejecutado en una terminal o shell de Unix o GNU/Linux, es básicamente un intérprete de línea de comandos. Por ejemplo, podríamos hacer un script muy básico llamado `mi_primer_script.sh` que ejecute una única línea en la que se listasen todos los archivos del directorio en el que nos encontramos, por ejemplo:
+Un programa ShellScript es un programa pensado para ser ejecutado en una terminal o shell de Unix o GNU/Linux, es básicamente un intérprete de línea de comandos. Por ejemplo, podríamos hacer un script muy básico llamado `mi_primer_script.sh` que ejecute una única línea en la que se liste todos los archivos del directorio en el que nos encontramos, por ejemplo:
 
 ```bash
 #!/bin/bash
@@ -920,7 +927,7 @@ Un programa ShellScript es un programa pensado para ser ejecutado en una termina
 ls -lrt
 ```
 
-En este ejemplo encontramos como primera línea `#!/bin/bash`, es la declaración del intérprete de comandos que se desea utilizar en su ejecución. Los dos primeros carácteres se denominan [Shebang](https://es.wikipedia.org/wiki/Shebang) y a continuación viene la ruta absoluta del ejecutable o intérprete, en este caso `/bin/bash`, pero podría ser otro como `/bin/ksh`, `/bin/sh`, `/usr/bin/awk`, etc. Nosotros usuaremos para los ejemplo siempre `/bin/bash`.
+En este ejemplo encontramos como primera línea `#!/bin/bash`, es la declaración del intérprete de comandos que se desea utilizar en su ejecución. Los dos primeros carácteres se denominan [Shebang](https://es.wikipedia.org/wiki/Shebang) y a continuación viene la ruta absoluta del ejecutable o intérprete, en este caso `/bin/bash`, pero podría ser otro como `/bin/ksh`, `/bin/sh`, `/usr/bin/awk`, etc. Nosotros usaremos para los ejemplos siempre `/bin/bash`.
 
 La siguiente línea es una simple línea de comandos shell, solo que la hemos escrito en un archivo. Se ejecutará igual que si lo tecleamos en la terminal. Para poder ejecutar nuestro primer script antes deberemos darle permisos de ejecución y para ello será necesario escribir el siguiente comando:
 
@@ -940,7 +947,7 @@ Tendremos como resultado un listado de archivos que se encuentran en el director
 -rwx------ 1 alice alice  8 May 18 11:15 mi_primer_script.sh
 ```
 
-Ahora probemos a modificar nuestro script y añadamos las siguientes líneas haciéndo así el programa un poquito más complejo:
+Ahora probemos a modificar nuestro script y añadamos las siguientes líneas haciendo así el programa un poquito más complejo:
 
 ```bash
 #!/bin/bash
@@ -969,9 +976,9 @@ Tanto en Unix como en GNU/Linux todo es un archivo. Cada vez que ejecutamos una 
 * Salida estándar (stdin)
 * Error estándar (stderr)
 
-La entrada estándar se refiere al archivo por el que una orden recibe su entrada, por defecto es el teclado. La salida estándar se refiere al archivo por el que una orden presenta sus resultados, por defecto es la pantalla o más concretamente la ventana en la que se está ejecutando el intérprete de órdenes. El error estándar se refiere al archivo por el que una orden presenta los mensajes que va generando cuando ocurre un error, y en este caso por defecto también es la pantalla. Estos archivos se crean en el directorio /dev.
+La entrada estándar se refiere al archivo por el que una orden recibe su entrada, por defecto es el teclado. La salida estándar se refiere al archivo por el que una orden presenta sus resultados, por defecto es la pantalla o más concretamente la ventana en la que se está ejecutando el intérprete de órdenes. El error estándar se refiere al archivo por el que una orden presenta los mensajes que va generando cuando ocurre un error, y en este caso por defecto también es la pantalla. Estos archivos se crean en el directorio `/dev`.
 
-Antes de que se ejecute una orden, es posible redirigir cualquiera de sus archivos de salida, esto es la redirección. Para llevarla a cabo es necesario utilizar los operadores de redirección que se procesan en el orden en el que aparecen, por ejemplo:
+Antes de que se ejecute una orden, es posible redirigir cualquiera de sus archivos de salida, esto es la redirección. Para llevarla a cabo es necesario utilizar los operadores de redirección que se procesan en el orden en el que aparecen.
 
 ### Redirección de la entrada estándar
 
@@ -1060,11 +1067,11 @@ Fetched 30.8 MB in 6s (4,825 kB/s)
 Reading package lists... Done
 ```
 
-Ahora que ya tenemos todos los repositoriso actualizados podremos proceder a isnstalar los paquetes que tengamos disponibles. En los siguientes puntos veremos la instalación de algunos paquetes de ejemplo que nos pueden reultar bastante útiles para trabajar en un sistema GNU/Linux.
+Ahora que ya tenemos todos los repositorios actualizados podremos proceder a instalar los paquetes que tengamos disponibles. En los siguientes puntos veremos la instalación de algunos paquetes de ejemplo que nos pueden resultar bastante útiles para trabajar en un sistema GNU/Linux.
 
 ### TREE
 
-Ell paquete tree es una utilidad que nos ayudará a listar de forma recursiva todos los archivos y directorios que hay en una ubicación específica, y lo hará en forma de árbol desglosado, bastante más visual para poder ver la jerarquía de archivos en toda su profundidad. Para instalarlo basta con escribir el siguiente comando:
+El paquete tree es una utilidad que nos ayudará a listar de forma recursiva todos los archivos y directorios que hay en una ubicación específica, y lo hará en forma de árbol desglosado, bastante más visual para poder ver la jerarquía de archivos en toda su profundidad. Para instalarlo basta con escribir el siguiente comando:
 
 ```bash
 ~# apt-get install tree
@@ -1122,7 +1129,7 @@ Para eliminar `tree` del sistema basta con ejecutar el siguiente comando:
 ~# apt-get remove tree
 ```
 
-Aparecenán unos mensajes como los siguientes y pedirá confirmación, deberemos pulsar `Y` e intro:
+Aparecerán unos mensajes como los siguientes y pedirá confirmación, deberemos pulsar `Y` e intro:
 
 ```bash
 Reading package lists... Done
@@ -1136,342 +1143,3 @@ Do you want to continue? [Y/n] Y
 (Reading database ... 89418 files and directories currently installed.)
 Removing tree (1.7.0-3) ...
 ```
-
-### GPG
-
-**GNU Privacy Guard** ([GnuPG](https://gnupg.org/) o GPG) es una herramienta de cifrado y firmas digitales desarrollado por *Werner Koch*, que viene a ser un reemplazo del **Pretty Good Privacy** ([PGP](https://en.wikipedia.org/wiki/Pretty_Good_Privacy)) pero con la principal diferencia que es [Software Libre](https://en.wikipedia.org/wiki/Free_software) licenciado bajo licencia [GPLv3](https://en.wikipedia.org/wiki/GNU_General_Public_License#Version_3). GPG utiliza el estándar del IETF denominado [OpenPGP](https://en.wikipedia.org/wiki/Pretty_Good_Privacy#OpenPGP).
-
-Para `gpg` deberemos hacerlo mediante `apt` de la siguiente manera:
-```bash
-~# apt install gnupg
-```
-
-#### Crear un par de claves (publica/privada) nuevas
-
-1. Lo primero que debes hacer es generar un par de claves (pública/privada) asociados a tu nombre, apellidos y una dirección de email. El siguiente comando iniciará un diálogo interactivo que deberemos ir cumpliementando con nuestras preferencias y datos, por ejemplo:
-    ```bash
-    ~$ gpg --full-generate-key
-    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
-    This is free software: you are free to change and redistribute it.
-    There is NO WARRANTY, to the extent permitted by law.
-
-    Por favor seleccione tipo de clave deseado:
-       (1) RSA y RSA (por defecto)
-       (2) DSA y ElGamal
-       (3) DSA (sólo firmar)
-       (4) RSA (sólo firmar)
-    Su elección: 1
-    ```
-    He elegido la opción 1, las claves RSA me valen perfectamente.
-
-    A continuación te pide la longitud de la clave, yo he elegido la longitud máxima, que es `4096` bytes:
-    ```bash
-    las claves RSA pueden tener entre 1024 y 4096 bits de longitud.
-    ¿De qué tamaño quiere la clave? (3072) 4096
-    El tamaño requerido es de 4096 bits
-    ```
-
-    Ahora toca elegir la caducidad de la clave, yo voy a elegir que no caduque nunca, opción `0` y confirmar con `s`:
-    ```bash
-    Por favor, especifique el período de validez de la clave.
-             0 = la clave nunca caduca
-          <n>  = la clave caduca en n días
-          <n>w = la clave caduca en n semanas
-          <n>m = la clave caduca en n meses
-          <n>y = la clave caduca en n años
-    ¿Validez de la clave (0)? 0
-    La clave nunca caduca
-    ¿Es correcto? (s/n) s
-    ```
-
-    Ahora hay que introducir un identificador de usuario, yo pondré mi nombre y apellidos (mejor caracteres ASCII, sin acentos ni caracteres especiales):
-    ```bash
-    GnuPG debe construir un ID de usuario para identificar su clave.
-
-    Nombre y apellidos: Javier Dominguez Gomez
-    ```
-
-    Dirección de email, esto es importante para asociar las claves a una cuenta de correo que luego podrán usar otras personas para comunicarse contigo de forma más segura:
-    ```bash
-    Dirección de correo electrónico: jdg@member.fsf.org
-    ```
-
-    También un comentario, es opcional, puedes poner algo que te identifique o dejarlo en blanco, yo pondré un mensaje para que se vea cómo quedaría:
-    ```bash
-    Comentario: With Free Software you have freedom!
-    ```
-
-    Finalmente nos hace un resumen de nuestras elecciones y nos permite modificarlas o confirmarlas. Si todo está bien podemos pulsar `V` e *intro*:
-    ```bash
-    Ha seleccionado este ID de usuario:
-        "Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>"
-
-    ¿Cambia (N)ombre, (C)omentario, (D)irección o (V)ale/(S)alir? V
-    ```
-    Al pulsar *intro* nos pedirá añadir un *passphrase* o contraseña. **Esta contraseña es importantísima**, es la que no debemos olvidar jamás, ya que se utilizará para cifrar y descifrar con nuestra clave privada. Pedirá introducirla dos veces. Si la perdemos u olvidamos ya no podremos descrifrar nuca más la información que fuera cifrada anteriormente.
-
-    En este momento se estará generando la clave, para ello empleará varios bytes "aleatorios" que podremos generar con el simple hecho de mover el raton por la pantalla. Hay que hacerlo durante unos pocos segundos hasta que se devuelva el prompt de la consola:
-    ```bash
-    Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
-    alguna otra tarea (trabajar en otra ventana/consola, mover el ratón, usar
-    la red y los discos) durante la generación de números primos. Esto da al
-    generador de números aleatorios mayor oportunidad de recoger suficiente
-    entropía.
-    Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
-    alguna otra tarea (trabajar en otra ventana/consola, mover el ratón, usar
-    la red y los discos) durante la generación de números primos. Esto da al
-    generador de números aleatorios mayor oportunidad de recoger suficiente
-    entropía.
-    gpg: clave DFCD16F1B1958BAD marcada como de confianza absoluta
-    gpg: certificado de revocación guardado como '/home/jdg/.gnupg/openpgp-revocs.d/AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD.rev'
-    claves pública y secreta creadas y firmadas.
-
-    pub   rsa4096 2020-05-08 [SC]
-          AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD
-    uid                      Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
-    sub   rsa4096 2020-05-08 [E]
-    ```
-
-2. Para asegurarme de si se ha creado bien mi clave pública la listo con el siguiente comando:
-    ```bash
-    ~$ gpg -k jdg@member.fsf.org
-    pub   rsa4096 2020-05-08 [SC]
-          AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD
-    uid        [  absoluta ] Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
-    sub   rsa4096 2020-05-08 [E]
-    ```
-
-3. También la clave privada:
-    ```bash
-    ~$ gpg -K jdg@member.fsf.org
-    sec   rsa4096 2020-05-08 [SC]
-          AB0553A482A6D69311CD4C8DDFCD16F1B1958BAD
-    uid        [  absoluta ] Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
-    ssb   rsa4096 2020-05-08 [E]
-    ```
-
-_**Nota**: Esta par de claves que acabo de generar son solo una demo para esta sección de este tutorial. En las siguiente secciones utilizaré como ejemplo mis claves reales que no tienen por que tener las mismas opciones._
-
-#### Exportar mi clave pública
-
-1. Una vez generes tu par de claves (pública/privada) es muy importante que exportes tu clave pública para compartirla con los demás, con cuanta más gente mejor. Realmente no hay nada malo en que personas desconocidas tiengan tu clave pública, todo lo contrario, puede ser muy beneficioso hacer que tu clave pública esté disponible y que las personas puedan encontrar fácilmente tu clave para comunicarse contigo de una forma más segura, cuanto antes mejor. Para exportar tu propia clave pública basta con ejecutar el siguiente comando (*en este ejemplo aparece mi clave pública truncada ya que es muy larga; la clave completa está [aquí](jdg-pubkey.txt)*):
-    ```bash
-    ~$ gpg --export --armor jdg@member.fsf.org
-    -----BEGIN PGP PUBLIC KEY BLOCK-----
-
-    mQINBFljzlYBEAD2uxIRG7e/kLjlErBVn1V+pVPRCNQ0emj2JYbsr+qUmB2VfULh
-    E/zQFimd2NCehijsiAQ/w0MrGtk+fw2LIAprU6+6Mi0fabMkQIP4E2+DFfLhps1u
-    o0ebw0VxRGfdW7GzQ85xaChi73P4kgYRT+8SE7M/CUwAH6FwTXQH2UTmrI4C4qGh
-    ...
-    ...
-    ...
-    yHdJLsA+ZpQiSIFgjFAX7YVFO/H1BQroOSp6sK4atzlRT+eP3+9zSj3nGri3Iavk
-    a3C0RYMEv+HI5gQgguyc
-    =2k8o
-    -----END PGP PUBLIC KEY BLOCK-----
-    ```
-
-2. Puedes ejecutar el comando anterior de la siguiente manera para que en vez de ver por pantalla la clave pública se vuelque en un fichero (opción `-o`) al que he llamado `jdg-pubkey.txt`:
-    ```bash
-    ~$ gpg --export --armor -o jdg-pubkey.txt jdg@member.fsf.org
-    ```
-
-3. Tanto si obtienes tu clave pública por pantalla en modo texto como si la vuelcas en un archivo, puedes compartirla con tus amigos, conocidos o con cualquier persona, enviándosela por mail o publicándola en algún servidor de claves como, como [Rediris](https://www.rediris.es/keyserver/) o [MIT PGP Key server](https://pgp.mit.edu/).
-
-4. Para publicar tu clave pública en un servidor de claves puedes hacerlo directamente desde la web del servidor que elijas, o bien puedes hacerlo desde línea de comandos pasándole el *key_id* de tu clave pública (los últimos 8 *bytes* de tu fingerprint) de la siguente forma:
-    ```bash
-    ~$ gpg --send-keys --keyserver pgp.mit.edu D6648E2B
-    gpg: enviando clave 5BDCC668D6648E2B a hkp://pgp.mit.edu
-    ```
-
-#### Importar clave pública de otra persona
-
-1. Primero hay que hacerse con la clave pública de la persona con la que quieres comunicarte utilizando GPG o PGP. hay que tener cuidado a la hora de obtener claves públicas a través de servidores de claves, es una opción pero no es la mejor opción, pues algunos podrían contener claves públicas falsas o de otras personas bajo tu nombre. En los siguientes puntos explico cómo verificar cual es la clave que realmente te interesa.
-
-2. Una vez que tenemos la clave pública de la persona en cuestión, hay que importarla mediante el siguiente comando:
-    ```bash
-    ~$ gpg --import rms-pubkey.txt
-    gpg: clave 2C6464AF2A8E4C02: clave pública "Richard Stallman <rms@gnu.org>" importada
-    gpg: Cantidad total procesada: 1
-    gpg:               importadas: 1
-    gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-    gpg: nivel: 0  validez:   7  firmada:   1  confianza: 0-, 0q, 0n, 0m, 0f, 7u
-    gpg: nivel: 1  validez:   1  firmada:   0  confianza: 0-, 0q, 0n, 0m, 1f, 0u
-    gpg: siguiente comprobación de base de datos de confianza el: 2020-10-18
-    ```
-
-3. Para estar realmente seguro de qué la clave pública que has importado es la de esa persona, se debe obtener el *fingerprint* o seguir una cadena de firmas de personas de confianza. Una manera fiable de obtener el *fingerprint* de una persona es dándola en mano, a través de una tarjeta o papel donde esté escrita. Esta práctica es muy habitual en una [Key Signing Party](https://es.wikipedia.org/wiki/Fiesta_de_firmado_de_claves).
-
-    <p align="center"><a src="img/gpg_00.png"><img width=425 src="img/gpg_00.png"></a>&nbsp;<a src="img/gpg_00.png"><img width=425 src="img/gpg_01.png"></a></p>
-    <br>
-
-4. Verificamos si el *fingerprint* que tenemos para comparar -*en este caso el que aparece en la tarjeta de RMS*-, coincide con el de la clave que acabamos de importar:
-    ```bash
-    ~$ gpg --fingerprint rms@gnu.org
-    pub   rsa4096 2013-07-20 [SC]
-          6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
-    uid        [desconocida] Richard Stallman <rms@gnu.org>
-    sub   rsa4096 2013-07-20 [E]
-    ```
-    Podemos ver que la confianza en esta clave pública aparece como `[desconocida]`.
-
-4. Si tras comprobar los *fingerprints* estos coinciden podríamos aumentar el nivel de confianza que tenemos con esa persona mediante el siguiente comando:
-    ```bash
-    ##~$ gpg --update-trustdb
-    gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-    gpg: nivel: 0  validez:   7  firmada:   2  confianza: 0-, 0q, 0n, 0m, 0f, 7u
-    No hay confianza definida para:
-    pub   rsa4096 2013-07-20 [SC]
-          "Richard Stallman <rms@gnu.org>"
-     Huella clave primaria: 6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
-
-    Por favor, decida su nivel de confianza en que este usuario
-    verifique correctamente las claves de otros usuarios (mirando
-    pasaportes, comprobando huellas dactilares en diferentes fuentes...)
-
-      1 = No lo sé o prefiero no decirlo
-      2 = NO tengo confianza
-      3 = Confío un poco
-      4 = Confío totalmente
-      s = saltar esta clave
-      q = salir
-
-    ¿Su decisión? 4
-    gpg: nivel: 1  validez:   2  firmada:   0  confianza: 0-, 0q, 0n, 0m, 2f, 0u
-    gpg: siguiente comprobación de base de datos de confianza el: 2020-10-18
-          67819B343B2AB70DED9320872C6464AF2A8E4C02
-    ```
-
-    Yo he elegido la opción `4`, puesto que tengo confianza total en esta clave pública, he comprobado rigurosamente con su dueño que esta clave le pertenece a él. Si volvemos a comprobar la clave pública veremos que el nivel de confianza ahora ha cambiado a `[   total   ]`.
-    ```bash
-    ~$ gpg --fingerprint rms@gnu.or
-    pub   rsa4096 2013-07-20 [SC]
-          6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
-    uid        [   total   ] Richard Stallman <rms@gnu.org>
-    ##sub   rsa4096 2013-07-20 [E]
-    ```
-
-5. También podemos firmar la clave que acabamos de importar. Firmar una clave significa que confías en la clave que se se te ha proporcionado y que has verificado que está asociada con la persona en cuestión. Para firmar una clave simplemente ejecutamos:
-    ```bash
-    ~$ gpg --sign-key rms@gnu.org
-
-    pub  rsa4096/2C6464AF2A8E4C02
-         creado: 2013-07-20  caduca: nunca       uso: SC  
-         confianza: desconocido   validez: desconocido
-    sub  rsa4096/2F30A2E162853425
-         creado: 2013-07-20  caduca: nunca       uso: E   
-    [desconocida] (1). Richard Stallman <rms@gnu.org>
-
-    pub  rsa4096/2C6464AF2A8E4C02
-         creado: 2013-07-20  caduca: nunca       uso: SC  
-         confianza: desconocido   validez: desconocido
-     Huella clave primaria: 6781 9B34 3B2A B70D ED93  2087 2C64 64AF 2A8E 4C02
-
-         Richard Stallman <rms@gnu.org>
-
-    ##¿Está realmente seguro de querer firmar esta clave
-    con su clave: "Javier Dominguez Gomez <jdg@member.fsf.org>" (5BDCC668D6648E2B)?
-
-    ¿Firmar de verdad? (s/N) s
-    ```
-Tras pulsar intro GPG te pedirá que introduzcas la password de tu clave privada GPG. La introduces y pulsas intro de nuevo, ya habrías firmado la clave pública de tu amigo. Firmar la clave significa que verificas públicamente que confías en que la persona es quien dice ser. Esto puede ayudar a otras personas a decidir si confiar en esa persona también. Si alguien confía tí y ve que has firmado la clave de esta persona, es más probable que también confíe en su identidad.
-
-#### Cifrado simétrico de ficheros
-
-A continuación explico de forma muy breve cómo se cifra un archivo cualquiera empleando cifrado simétrico. En esta ocasión no hará falta utilizar un par de claves (pública/privada), solo una password.
-
-1. Para este ejemplo primero crearemos un archivo `prueba.txt` que contendrá la cadena de texto "*Hola*".
-    ```bash
-    ~$ echo "Hola" > prueba.txt
-    ~$ cat prueba.txt
-    Hola
-    ```
-
-2. Si queremos cifrar el archivo `prueba.txt` con un *passphrase* ejecutamos el siguiente comando sobre el archivo:
-    ```bash
-    ~$ gpg -o prueba.gpg -c prueba.txt
-    ```
-Nos pedirá insertar un *passphrase* para su cifrado.
-
-3. Debemos recordar este *passphrase* para luego descifrar nuestro archivo. La opción `-o` es para indicar el archivo de salida ya cifrado, y la opción `-c` es para indicar que se va a realizar un cifrado simétrico (por defecto AES128). Si se quisiera cambiar el tipo de cifrado se puede sustituir la opción `-c` por `--cipher-algo` y a continuación especificar el tipo de cifrado, por ejemplo:
-    ```bash
-    ~$ gpg -o prueba.gpg --cipher-algo AES256 prueba.txt
-    ```
-Los algoritmos de cifrado simétrico disponibles son: `IDEA`, `3DES`, `CAST5`, `BLOWFISH`, `AES`, `AES192`, `AES256`, `TWOFISH`, `CAMELLIA128`, `CAMELLIA192` y `CAMELLIA256`.
-
-4. Una vez hecho esto, se puede listar el contenido del directorio actual para ver lo que se ha generado.
-    ```bash
-    ~$ ls -lrt
-    -rw-rw-r-- 1 jdg jdg     5 may  5 17:53 prueba.txt
-    -rw-rw-r-- 1 jdg jdg    85 may  5 17:53 prueba.gpg
-    ```
-
-5. Si queremos ver qué contiene el archivo `prueba.gpg` generado veremos que ya no tiene el texto en claro y está cifrado.
-    ```bash
-    ~$ cat prueba.gpg
-    ??K0pF?%<??Z?8??>??Tgh???_u???O?
-    ????8a?
-    ```
-
-6. Ahora ya podemos guardar para nosotros mismos o hacer llegar el archivo a una persona que conozca la *passphrase* para descifrarlo, de un modo seguro y fiable. Para descifrar el archivo bastaría con ejecutar el siguiente comando:
-    ```bash
-    ~$ gpg -d prueba.gpg
-    gpg: datos cifrados AES
-    gpg: cifrado con 1 frase contraseña
-    Hola
-    ```
-Nos pedirá insertar un *passphrase* para descifrarlo, y si lo introducimos correctamente aparecerá el mensaje en claro que está en el archivo original.
-
-Si lo que se quiere cifrar es un conjunto de archivos y directorios bastaría con empaquetarlos y/o comprimirlos en un archivo, por ejemplo `.tar`, `.zip` `.gz`, etc, y repetir el proceso de esta guía.
-
-#### Cifrado asimétrico de ficheros con clave pública
-
-1. Para cifrar un archivo con clave pública se ha de ejecutar el siguiente comando:
-    ```bash
-    ~$ gpg -e -u ​"mi identificador"​ -r ​ "el del destinatario"​ prueba.txt
-    ```
-Por ejemplo:
-    ```bash
-    ~$ gpg -e -u ​"jdg@member.fsf.org"​ -r ​"rms@gnu.org"​ prueba.txt
-    ```
-Tras ejecutar este comando se generará un nuevo archivo `prueba.txt.gpg` que solo `rms@gnu.org` podrá descifrar con su clave privada, pues he utilizado su clave pública para cifrarlo.
-
-#### Eliminar claves
-
-Podemos eliminar claves públicas (la nuestra o las de otras personas) de nuestro anillo de confianza en GPG. Es importante tener en cuenta que si lo que queremos eliminar es una clave pública nuestra, si esta está asociada a una clave privada deberemos eliminar primero la clave privada, sino nos dará erroSi se trata de la clave pública de otra persona se peude borrar sin problemas sin tener que hacer nada antes.
-
-1. Para eliminar una clave privada basta con ejecutar el siguiente comando pasándole el *key_id* de tu clave pública (los últimos 8 *bytes* de tu fingerprint) de la siguente forma:
-    ```bash
-    ~$ gpg --delete-secret-key B1958BAD
-    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
-    This is free software: you are free to change and redistribute it.
-    There is NO WARRANTY, to the extent permitted by law.
-
-    sec  rsa4096/DFCD16F1B1958BAD 2020-05-08 Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
-
-    ¿Eliminar esta clave del anillo? (s/N) s
-    ¡Es una clave secreta! ¿Eliminar realmente? (s/N) s
-    ```
-    GPG te preguntará varias veces si estás absolutamente convencido de querer eliminar una clave privada. Es muy importante estar seguro de querer borrarla, si se elimina ya no se podrá utilizar (a no ser que tengas un backup) para cifrar y descifrar mensajes, por lo que todo lo que tuvieras cifrado con esta clave se podría perder para siempre.
-
-2. Para eliminar una clave pública se puede hacer con el siguiente comando al que también hay que pasarle el *key_id* de tu clave pública (los últimos 8 *bytes* de tu fingerprint):
-    ```bash
-    $ gpg --delete-key B1958BAD
-    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
-    This is free software: you are free to change and redistribute it.
-    There is NO WARRANTY, to the extent permitted by law.
-
-    pub  rsa4096/DFCD16F1B1958BAD 2020-05-08 Javier Dominguez Gomez (With Free Software you have freedom!) <jdg@member.fsf.org>
-
-    ¿Eliminar esta clave del anillo? (s/N) s
-    ```
-    En esta ocasión solo nos pedirá una única confirmación, pulsamos `s` e *intro*.
-
-
-### GIT
-
-xxx
-
-### DOCKER
-
-xxx
