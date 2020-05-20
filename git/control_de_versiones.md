@@ -8,4 +8,4 @@ Como Git mantiene información de los cambios efectuados en cada versión, tambi
 
 Si combinamos Git con un repositorio online, como los proporcionados por [github](https://github.com/) o [bitbucket](https://bitbucket.org/), podremos además trabajar de forma colaborativa con un equipo de desarrolladores. En este caso, Git se encargará de coordinar los distintos cambios para que varios desarrolladores puedan trabajar a la vez sobre un código.
 
-Este manual te enseñará como usar los comandos básicos de Git de forma que puedas beneficiarte de todas estas ventajas en tus proyectos.
+Este manual te enseñará cómo usar los comandos básicos de Git de forma que puedas beneficiarte de todas estas ventajas en tus proyectos.
