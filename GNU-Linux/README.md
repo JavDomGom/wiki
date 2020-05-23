@@ -402,6 +402,41 @@ El comando `exit` lo utilizaremos para salir de un programa, en ocasiones el pro
 ~$ exit
 ```
 
+## Creación de usuarios y grupos nuevos
+
+Para crear un grupo nuevo:
+```bash
+~# addgroup migrupo
+```
+
+Para crear un usuario nuevo:
+```bash
+~# adduser miusuario
+```
+
+Para cambiarle la contraseña:
+```bash
+~# passwd miusuario
+```
+
+Si queremos incluir el `miusuario` en el grupo `migrupo` como grupo primario:
+
+```bash
+~$ sudo usermod miusuario -g grupo1
+```
+
+Si preferimos incluirlo en el `migrupo` como grupo secundario:
+
+```bash
+~$ sudo usermod miusuario -G migrupo
+```
+
+Y para incluirlo posteriormente en otro grupo secundario sin borrar los anteriores:
+
+```bash
+~$ sudo usermod miusuario -a migrupo2
+```
+
 ## Estructura de directorios y archivos
 
 Los sistemas de archivos tienen directorios en los que se organizan los archivos y estos directorios suelen estar organizados jerárquicamente. La jerarquía implica que un directorio puede contener subdirectorios. El directorio más alto en la jerarquía del que cuelgan todos los demás se denomina raíz (root). Este directorio raíz se representa con una barra “/” y sólo existe una jerarquía, es decir, sólo existe un directorio raíz, incluso aunque haya distintos discos duros en el servidor. Dentro del directorio raíz podemos encontrar diversos subdirectorios, por ejemplo en GNU/Linux existe el directorio “home”. Así pues, el directorio “home” es un subdirectorio del directorio raíz “/”. Esta relación se representa como:

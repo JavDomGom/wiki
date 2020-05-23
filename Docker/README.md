@@ -126,3 +126,14 @@ Para asegurarnos de que hemos instalado correctamente Docker podremos ejecutar e
 ~$ sudo docker --version
 Docker version 19.03.9, build 9d988398e7
 ```
+
+## Administrar Docker sin sudo
+Primero hay que meter el usuario en el sudoers file. Para ello, como root se debe ejcutar el siguiente comando:
+```bash
+~# usermod -aG sudo alice
+```
+
+Luego añadirlo al grupo docker:
+```bash
+~$ sudo gpasswd -a alice docker
+```
