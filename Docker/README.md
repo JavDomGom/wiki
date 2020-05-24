@@ -6,6 +6,20 @@ Docker es un software que se utiliza principalmente para desplegar aplicaciones 
 
 En los siguientes puntos explicaré en detalle el funcionamiento y la utilización de Docker con algunos ejemplos.
 
+## Máquina virtual Vs. Contenedores Docker
+
+Hasta no hace mucho tiempo la manera de desplegar microservicios o pequeñas aplicaciones de forma independiente en una misma máquina era utilizando máquinas virtuales. Una máquina virtual es realmente una instalación de un sistema operativo dentro de otro sistema operativo, y para ello se utiliza un software llamado Hipervisor, que es quien nos permite poder tener múltiples sistemas en una misma máquina con independencia de recursos como pueden ser disco memoria, procesos, etc.
+
+<p align="center"><img src="img/docker_00.png"></p>
+<br>
+
+Este tipo de instalaciones mediante un hipervisor son bastante pesadas y difíciles de mantener y administrar, pues se trata de la instalación de uno o más sistemas operativos huépedes al completo dentro de un sistema operativo anfitrión. Este sistema operativo anfitrión deberá ser una máquina muy potente y con muchos recursos.
+
+Docker propone un sistema en el que no se tenga que instalar un sistema operativo completo dentro de otro, sino aprovechar las características y recursos que ya esten disponibles en l amáquina anfitriona y compartirlos a través de una pieza fundamental llamada `Docker Engine`, es el motor de Docker, que no es más que un servicio corriendo en la máquina anfitriona en el que podremos desplegar los diferentes contenedores que solo compartirán la misma base del sistema operativo anfitrión.
+
+Obviamente, dentro de cada contenedor encontraremos sus propias características, sus propias librerías, y una serie de recursos que podremos compartir para hacerlos visibles a otros contenedores o a la máquina anfitriona.
+
+
 ## Instalación de Docker
 
 Para instalar Docker primero deberemos actualizar la información sobre paquetes que tenemos en nuestros repositorios locales mediante el siguiente comando:
@@ -137,3 +151,15 @@ Luego añadirlo al grupo docker:
 ```bash
 ~$ sudo gpasswd -a alice docker
 ```
+
+## ¿Qué es una imagen?
+
+Una imagen Docker es una plantilla con una configuración específica que nos servirá para crear un tipo de objetos virtuales llamados contenedores, es decir un "molde" a partir del cual podremos obtener máquinas virtuales con la misma configuración, programas y características de base. Las imágenes las podemos crear o compilar nosotros mismo, pero también podemos utilizar cualquiera de las que han creado otras personas y empresas, y que están disponibles de froma pública en repositrios de imágenes como [DockerHub](https://hub.docker.com/), hay cientos de imágenes disponibles.
+
+Si quisieramos crear una imagen Docker nosotros mismos debemos compilarla en nuestra máquina local. Para ello es necesario crear un archivo llamado `Dockerfile` y escribir dentro de él una serie de intrucciones. Aquí tendríamos un ejemplo de cómo sería el contenido de un archivo `Dockerfile` mínimo:
+```
+
+```
+
+
+## ¿Qué es un contenedor?
