@@ -198,10 +198,62 @@ hello-world      latest      bf756fb1ae65     4 months ago      13.3kB
 
 Lo que hemos hecho realmente es instalar en nuestra máquina una imagen Docker ya compilada que está subida en DockerHub, una vez instalada la hemos creado un contenedor basado en esta imagen. Este contenedor tras mostrar el mensaje `Hello from Docker!` se termina y se apaga.
 
-Si quisieramos crear una imagen Docker nosotros mismos debemos compilarla en nuestra máquina local. Para ello es necesario crear un archivo llamado `Dockerfile` y escribir dentro de él una serie de intrucciones. Aquí tendríamos un ejemplo de cómo sería el contenido de un archivo `Dockerfile` mínimo:
-```
+Si quisieramos crear una imagen Docker nosotros mismos debemos compilarla en nuestra máquina local. Para ello es necesario crear un archivo llamado `Dockerfile` y escribir dentro de él una serie de intrucciones. Aquí tendríamos un ejemplo de cómo sería el contenido de un archivo `Dockerfile` bastante simple que contendría una imagen minimalista de un sistema Ubuntu:
 
 ```
+FROM ubuntu:latest
+```
+
+Para compilar esta imagen en local tendríamos que ejecutar el siguiente comando :
+
+```bash
+~$ docker build .
+```
+
+Tendrá una salida de parecida a esta:
+
+```bash
+Sending build context to Docker daemon  2.048kB
+Step 1/1 : FROM ubuntu:latest
+latest: Pulling from library/ubuntu
+d51af753c3d3: Pull complete
+fc878cd0a91c: Pull complete
+6154df8ff988: Pull complete
+fee5db0ff82f: Pull complete
+Digest: sha256:747d2dbbaaee995098c9792d99bd333c6783ce56150d1b11e333bbceed5c54d7
+Status: Downloaded newer image for ubuntu:latest
+ ---> 1d622ef86b13
+Successfully built 1d622ef86b13
+```
+
+Al comando `docker` le pasamos la opción `build` para construir la imagen y finalmente un punto `.` que es la manera de decirle al comando `docker` que el archivo `Dockerfile` se encuentra en el mismo directorio en el que nos encontramos.
+
+```bash
+$ docker images
+REPOSITORY      TAG     IMAGE ID        CREATED         SIZE
+ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
+hello-world     latest  bf756fb1ae65    4 months ago    13.3kB
+```
+
+A la hora de compilar una imagen usando un `Dockerfile` podemos usar muchas opciones, por ejemplo podemos usar la opción `-t` (tag) para etiquetar la imagen con el nombre `test_ubuntu`, luego dos puntos `:` para indicar la separación entre el nombre de la imagen y la versión, después la versión, por ejemplo `0.1.0`
+
+```bash
+~$ docker build -t test_ubuntu:0.1.0 .
+```
+
+Obviamente son datos de ejmplo, a la imagen la podríamos haber nombrado o etiquetado con otro nombre, por ejemplo `mi_primera_imagen`, y la versión también podríamos haber puesto otra cosa como por ejemplo `v1` o `version_uno`, pero he elegido poner un nombre y una versión más acordes a las buenas prácticas. La diferencia de indicar la opción `-t` con una etiqueta con un nombre y una versión y no hacerlo es que con la etiqueta te creará una imagen Docker llamada `ubuntu` con versión `latest` y además creará una "copia" con el mismo identificador (ID) con el nombre que pusieras.
+
+Para listar las imagenes que tenemos compiladas en local, bien si las hemos compilado a través de nuestro propio archivo `Dockerfile` o bien compilándolas desde `DockerHub`, debemos ejecutar el siguiente comando:
+
+```bash
+~$ docker images
+REPOSITORY      TAG     IMAGE ID        CREATED         SIZE
+test_ubuntu     0.1.0   1d622ef86b13    4 weeks ago     73.9MB
+ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
+hello-world     latest  bf756fb1ae65    4 months ago    13.3kB
+```
+
+Como podéis ver, al haber compilado la imagen indicando la etiqueta `test_ubuntu:0.1.0` se han creado aparentemente dos imagenes, pero en realidad es la misma, tienen el mismo ID `1d622ef86b13`. Fijaos que se trata de una imagen minimalista muy muy reducida de un sistema Ubuntu, tiene un tamaño de tan solo `73.9MB`.
 
 ## ¿Qué es un contenedor?
 
