@@ -253,9 +253,130 @@ ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
 hello-world     latest  bf756fb1ae65    4 months ago    13.3kB
 ```
 
-Como podéis ver, al haber compilado la imagen indicando la etiqueta `test_ubuntu:0.1.0` se han creado aparentemente dos imagenes, pero en realidad es la misma, tienen el mismo ID `1d622ef86b13`. Fijaos que se trata de una imagen minimalista muy muy reducida de un sistema Ubuntu, tiene un tamaño de tan solo `73.9MB`.
+Como podéis ver, al haber compilado la imagen indicando la etiqueta `test_ubuntu:0.1.0` se han creado aparentemente dos imagenes, pero en realidad es la misma, tienen el mismo ID `1d622ef86b13`. Si os fijáis bien se trata de una imagen minimalista muy muy reducida de un sistema Ubuntu, tiene un tamaño de tan solo `73.9MB`. Aunque pueda parecer muy poco tamaño, existen otras imágenes de sistemas GNU/Linux más reducidas todavía, como por ejemplo `Alpine`, veamos qué sucede si compilamos una imagen de un sistema `Alpine`:
+
+1. Creamos el siguiente archivo `Dockerfile`:
+    ```
+    FROM apline:latest
+    ```
+
+2. Compilamos la imagen con `docker build`:
+    ```bash
+    ~$ docker build .
+    ```
+
+3. Listamos las imágenes una vez compiladas con `docker images`:
+    ```bash
+    ~$ docker images
+    REPOSITORY      TAG     IMAGE ID        CREATED         SIZE
+    alpine          latest  f70734b6a266    4 weeks ago     5.61MB
+    ```
+
+Como se puede ver, la imagen de `Apline` es una imagen de tan solo `5.61MB` de tamaño, y nos puede servir como máquina GNU/Linux mínima de base para nuestros proyectos. Incluye todos los recursos mínimos para hacer funcionar un sistema operativo GNU/Linux. Si ocupa tan poco espacio es porque gracias al motor de Docker (Docker Engine) comparte algunos recursos con la máquina anfitriona, es decir nuestra computadora local donde tenemos instaldo Docker.
+
+Si quisiéramos eliminar una imagen previamente creada o descargada deberemos hacerlo de la siguiente forma:
+
+1. Listamos las imágenes locales existentes:
+    ```bash
+    ~$ docker images
+    REPOSITORY      TAG     IMAGE ID        CREATED         SIZE
+    ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
+    alpine          latest  f70734b6a266    4 weeks ago     5.61MB
+    hello-world     latest  bf756fb1ae65    4 months ago    13.3kB
+    ```
+
+2. Si quisiéramos eliminar por ejemplo la imagen llamada `hello-world`, podríamos hacerlo de varias maneras, o bien indicando el nombre y versión de la imagen:
+    ```bash
+    ~$ docker rmi hello-world:latest
+    ```
+O bien indicando el `IMAGE ID` de la imagen, que en este ejemplo es `bf756fb1ae65`:
+    ```bash
+    ~$ docker rmi bf756fb1ae65
+    ```
+En ambos casos obtendríamos el siguiente *output* por pantalla:
+    ```bash
+    Untagged: hello-world:latest
+    Untagged: hello-world@sha256:6a65f928fb91fcfbc963f7aa6d57c8eeb426ad9a20c7ee045538ef34847f44f1
+    Deleted: sha256:bf756fb1ae65adf866bd8c456593cd24beb6a0a061dedf42b26a993176745f6b
+    Deleted: sha256:9c27e219663c25e0f28493790cc0b88bc973ba3b1686355f221c38a36978ac63
+    ```
+
+3. Si volvemos a listar las imágenes Docker locales existentes veremos que la imagen llamada `hello-world` ya no existe:
+    ```bash
+    ~$ docker images
+    REPOSITORY      TAG     IMAGE ID        CREATED         SIZE
+    ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
+    alpine          latest  f70734b6a266    4 weeks ago     5.61MB
+    ```
 
 ## ¿Qué es un contenedor?
+
+Un contenedor es una virtualización de un conjunto de programas, paquetes y librerías, instanciados a partir de una imagen Docker previamente compilada. para buscar un simil que nos suene familiar y que se pueda entender perfectamente por todo el mundo, se podría decir que una imagen Docker es como un molde de galletas y los contenedores serían las diferentes galletas que puedes hacer a partir de un mismo molde. Tener muchas imágenes Docker diferentes es el equivalente a tener muchos moldes de galletas diferentes, por ejemplo en forma de estrella, de círculo, de árbol, etc. Siempre puedes hacer galletas de diferentes formas, solo tienes que utilizar el molde que mejor te venga.
+
+Podemos iniciar o poner en funcionamiento contenedores Docker de varias maneras, bien porque tenemos la imagen ya compilada en local o bien porque Docker va a buscar la imagen al repositorio de DockerHub, donde hay centenares de imágenes ya compiladas y disponibles para usar.
+
+Veamos un ejemplo en el que iniciamos un contenedor que no tenemos en local pero que se descargará automáticamente del repositori de DockerHub:
+
+```bash
+~$ docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+0e03bdcc26d7: Pull complete
+Digest: sha256:6a65f928fb91fcfbc963f7aa6d57c8eeb426ad9a20c7ee045538ef34847f44f1
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+
+Esto ya lo vimos en el punto anterior, como se peude ver, Docker primero va a buscar la imagen `hello-world` en local, y si no existe irá a buscarla al repositorio remoto DockerHub en internet.
+
+Veamos ahora cómo iniciar un contenendor Docker de una imagen local, primero hay que listar las imágenes locales para ver cómo se llaman y qué versiones tenemos disponibles:
+
+```bash
+~$ docker images
+REPOSITORY      TAG     IMAGE ID        CREATED         SIZE
+ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
+alpine          latest  f70734b6a266    4 weeks ago     5.61MB
+```
+
+Vamos a iniciar un contenedor basándonos en la imagen de `ubuntu`, por lo tanto, podríamos hacerlo con el comando `docker run` indicando el nombre y la versión:
+
+```bash
+~$ docker run -it ubuntu:latest bash
+```
+
+O bien indicando el `IMAGE ID` que en este caso es `1d622ef86b13` de la siguiente forma:
+
+```bash
+~$ docker run -it 1d622ef86b13 bash
+```
+
+Los flags `-it` son `i` para indicar que queremos iniciar un contenendor de forma interactiva, es decir, que queremos iniciarlo y entrar dentro para trabajar en él, y `t` para indicar que queremos iniciar una sesión `tty` en consola. al final indicamos el tipo de intérprete o programa que queremos ejecutar al entrar, que en nuestro caso es `bash`. Al crear el contenedor accederemos a una shell parecida a esta:
+
+```bash
+root@5cbe59e47396:/#
+```
+
+En este caso `root` es el usuario con el que hemos entrado en este contenendor, `5cbe59e47396` es el ID del contenedor que se ha creado, cada vez será uno diferente, y `/` es el path o directorio raíz en el que nos encontramos nada más entrar.
 
 Para ver qué contenedores que tenemos creados podremos usar el siguiente comando:
 ```bash
