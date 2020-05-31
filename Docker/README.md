@@ -13,9 +13,9 @@ Hasta no hace mucho tiempo la manera de desplegar microservicios o pequeñas apl
 <p align="center"><img src="img/docker_00.png"></p>
 <br>
 
-Este tipo de instalaciones mediante un hipervisor son bastante pesadas y difíciles de mantener y administrar, pues se trata de la instalación de uno o más sistemas operativos huépedes al completo dentro de un sistema operativo anfitrión. Este sistema operativo anfitrión deberá ser una máquina muy potente y con muchos recursos.
+Este tipo de instalaciones mediante un hipervisor son bastante pesadas y difíciles de mantener y administrar, pues se trata de la instalación de uno o más sistemas operativos huéspedes al completo dentro de un sistema operativo anfitrión. Este sistema operativo anfitrión deberá ser una máquina muy potente y con muchos recursos.
 
-Docker propone un sistema en el que no se tenga que instalar un sistema operativo completo dentro de otro, sino aprovechar las características y recursos que ya esten disponibles en l amáquina anfitriona y compartirlos a través de una pieza fundamental llamada `Docker Engine`, es el motor de Docker, que no es más que un servicio corriendo en la máquina anfitriona en el que podremos desplegar los diferentes contenedores que solo compartirán la misma base del sistema operativo anfitrión.
+Docker propone un sistema en el que no se tenga que instalar un sistema operativo completo dentro de otro, sino aprovechar las características y recursos que ya están disponibles en la máquina anfitriona y compartirlos a través de una pieza fundamental llamada `Docker Engine`, es el motor de Docker, que no es más que un servicio corriendo en la máquina anfitriona en el que podremos desplegar los diferentes contenedores que solo compartirán la misma base del sistema operativo anfitrión.
 
 Obviamente, dentro de cada contenedor encontraremos sus propias características, sus propias librerías, y una serie de recursos que podremos compartir para hacerlos visibles a otros contenedores o a la máquina anfitriona.
 
@@ -78,8 +78,10 @@ Aquí una breve descripción sobre cada uno de los paquetes que acabamos de inst
 
 Para asegurarnos de que el software que estamos instalando es auténtico verificaremos la integridad del mismo usando GPG mediante el siguiente comando:
 
+```bash
 ~$ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 OK
+```
 
 Ahora tenemos que añadir el repositorio oficial de Docker a nuestra lista de repositorios, de ese modo todo el software que exista en dichos repositorios estará disponible para ser instalado cuando lo necesitemos:
 
@@ -142,21 +144,23 @@ Docker version 19.03.9, build 9d988398e7
 ```
 
 ## Administrar Docker sin sudo
-Primero hay que meter el usuario en el sudoers file. Para ello, como root se debe ejcutar el siguiente comando:
+Primero hay que meter el usuario en el sudoers file. Para ello, como root se debe ejecutar el siguiente comando:
+
 ```bash
 ~# usermod -aG sudo alice
 ```
 
 Luego añadirlo al grupo docker:
+
 ```bash
 ~$ sudo gpasswd -a alice docker
 ```
 
 ## ¿Qué es una imagen?
 
-Una imagen Docker es una plantilla con una configuración específica que nos servirá para crear un tipo de objetos virtuales llamados contenedores, es decir un "molde" a partir del cual podremos obtener máquinas virtuales con la misma configuración, programas y características de base. Las imágenes las podemos crear o compilar nosotros mismo, pero también podemos utilizar cualquiera de las que han creado otras personas y empresas, y que están disponibles de froma pública en repositrios de imágenes como [DockerHub](https://hub.docker.com/), hay cientos de imágenes disponibles.
+Una imagen Docker es una plantilla con una configuración específica que nos servirá para crear un tipo de objetos virtuales llamados contenedores, es decir un "molde" a partir del cual podremos obtener máquinas virtuales con la misma configuración, programas y características de base. Las imágenes las podemos crear o compilar nosotros mismo, pero también podemos utilizar cualquiera de las que han creado otras personas y empresas, y que están disponibles de forma pública en repositorios de imágenes como [DockerHub](https://hub.docker.com/), hay cientos de imágenes disponibles.
 
-Por ejemplo, la imagen más típica para descargar y dar los primeros pasos con Docker es la imagen `hello-world`. Esta imágen la podremos descargar automáticamente (pull) de DockerHub y tener en nuestra lista de imágenes locales de la siguiente manera:
+Por ejemplo, la imagen más típica para descargar y dar los primeros pasos con Docker es la imagen `hello-world`. Esta imagen la podremos descargar automáticamente (pull) de DockerHub y tener en nuestra lista de imágenes locales de la siguiente manera:
 
 ```bash
 ~$ docker run hello-world
@@ -188,7 +192,7 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
-Ahora podemos obtener un listado de las imégenes que tenemos en local con el siguiente comando:
+Ahora podemos obtener un listado de las imágenes que tenemos en local con el siguiente comando:
 
 ```bash
 ~$ docker images
@@ -198,7 +202,7 @@ hello-world      latest      bf756fb1ae65     4 months ago      13.3kB
 
 Lo que hemos hecho realmente es instalar en nuestra máquina una imagen Docker ya compilada que está subida en DockerHub, una vez instalada la hemos creado un contenedor basado en esta imagen. Este contenedor tras mostrar el mensaje `Hello from Docker!` se termina y se apaga.
 
-Si quisieramos crear una imagen Docker nosotros mismos debemos compilarla en nuestra máquina local. Para ello es necesario crear un archivo llamado `Dockerfile` y escribir dentro de él una serie de intrucciones. Aquí tendríamos un ejemplo de cómo sería el contenido de un archivo `Dockerfile` bastante simple que contendría una imagen minimalista de un sistema Ubuntu:
+Si quisiéramos crear una imagen Docker nosotros mismos debemos compilarla en nuestra máquina local. Para ello es necesario crear un archivo llamado `Dockerfile` y escribir dentro de él una serie de instrucciones. Aquí tendríamos un ejemplo de cómo sería el contenido de un archivo `Dockerfile` bastante simple que contendría una imagen minimalista de un sistema Ubuntu:
 
 ```
 FROM ubuntu:latest
@@ -235,15 +239,15 @@ ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
 hello-world     latest  bf756fb1ae65    4 months ago    13.3kB
 ```
 
-A la hora de compilar una imagen usando un `Dockerfile` podemos usar muchas opciones, por ejemplo podemos usar la opción `-t` (tag) para etiquetar la imagen con el nombre `test_ubuntu`, luego dos puntos `:` para indicar la separación entre el nombre de la imagen y la versión, después la versión, por ejemplo `0.1.0`
+A la hora de compilar una imagen usando un `Dockerfile` podemos usar muchas opciones, por ejemplo podemos usar la opción `-t` (tag) para etiquetar la imagen con el nombre `test_ubuntu`, luego dos puntos `:` para indicar la separación entre el nombre de la imagen y la versión, después la versión, por ejemplo `0.1.0`:
 
 ```bash
 ~$ docker build -t test_ubuntu:0.1.0 .
 ```
 
-Obviamente son datos de ejmplo, a la imagen la podríamos haber nombrado o etiquetado con otro nombre, por ejemplo `mi_primera_imagen`, y la versión también podríamos haber puesto otra cosa como por ejemplo `v1` o `version_uno`, pero he elegido poner un nombre y una versión más acordes a las buenas prácticas. La diferencia de indicar la opción `-t` con una etiqueta con un nombre y una versión y no hacerlo es que con la etiqueta te creará una imagen Docker llamada `ubuntu` con versión `latest` y además creará una "copia" con el mismo identificador (ID) con el nombre que pusieras.
+Obviamente son datos de ejemplo, a la imagen la podríamos haber nombrado o etiquetado con otro nombre, por ejemplo `mi_primera_imagen`, y la versión también podríamos haber puesto otra cosa como por ejemplo `v1` o `version_uno`, pero he elegido poner un nombre y una versión más acordes a las buenas prácticas. La diferencia de indicar la opción `-t` con una etiqueta con un nombre y una versión y no hacerlo es que con la etiqueta te creará una imagen Docker llamada `ubuntu` con versión `latest` y además creará una "copia" con el mismo identificador (ID) con el nombre que pusieras.
 
-Para listar las imagenes que tenemos compiladas en local, bien si las hemos compilado a través de nuestro propio archivo `Dockerfile` o bien compilándolas desde `DockerHub`, debemos ejecutar el siguiente comando:
+Para listar las imágenes que tenemos compiladas en local, bien si las hemos compilado a través de nuestro propio archivo `Dockerfile` o bien compilándolas desde `DockerHub`, debemos ejecutar el siguiente comando:
 
 ```bash
 ~$ docker images
@@ -253,7 +257,7 @@ ubuntu          latest  1d622ef86b13    4 weeks ago     73.9MB
 hello-world     latest  bf756fb1ae65    4 months ago    13.3kB
 ```
 
-Como podéis ver, al haber compilado la imagen indicando la etiqueta `test_ubuntu:0.1.0` se han creado aparentemente dos imagenes, pero en realidad es la misma, tienen el mismo ID `1d622ef86b13`. Si os fijáis bien se trata de una imagen minimalista muy muy reducida de un sistema Ubuntu, tiene un tamaño de tan solo `73.9MB`. Aunque pueda parecer muy poco tamaño, existen otras imágenes de sistemas GNU/Linux más reducidas todavía, como por ejemplo `Alpine`, veamos qué sucede si compilamos una imagen de un sistema `Alpine`:
+Como podéis ver, al haber compilado la imagen indicando la etiqueta `test_ubuntu:0.1.0` se han creado aparentemente dos imágenes, pero en realidad es la misma, tienen el mismo ID `1d622ef86b13`. Si os fijáis bien se trata de una imagen minimalista muy muy reducida de un sistema Ubuntu, tiene un tamaño de tan solo `73.9MB`. Aunque pueda parecer muy poco tamaño, existen otras imágenes de sistemas GNU/Linux más reducidas todavía, como por ejemplo `Alpine`, veamos qué sucede si compilamos una imagen de un sistema `Alpine`:
 
 1. Creamos el siguiente archivo `Dockerfile`:
     ```
@@ -272,7 +276,7 @@ Como podéis ver, al haber compilado la imagen indicando la etiqueta `test_ubunt
     alpine          latest  f70734b6a266    4 weeks ago     5.61MB
     ```
 
-Como se puede ver, la imagen de `Apline` es una imagen de tan solo `5.61MB` de tamaño, y nos puede servir como máquina GNU/Linux mínima de base para nuestros proyectos. Incluye todos los recursos mínimos para hacer funcionar un sistema operativo GNU/Linux. Si ocupa tan poco espacio es porque gracias al motor de Docker (Docker Engine) comparte algunos recursos con la máquina anfitriona, es decir nuestra computadora local donde tenemos instaldo Docker.
+Como se puede ver, la imagen de `Apline` es una imagen de tan solo `5.61MB` de tamaño, y nos puede servir como máquina GNU/Linux mínima de base para nuestros proyectos. Incluye todos los recursos mínimos para hacer funcionar un sistema operativo GNU/Linux. Si ocupa tan poco espacio es porque gracias al motor de Docker (Docker Engine) comparte algunos recursos con la máquina anfitriona, es decir nuestra computadora local donde tenemos instalado Docker.
 
 Si quisiéramos eliminar una imagen previamente creada o descargada deberemos hacerlo de la siguiente forma:
 
@@ -293,7 +297,7 @@ O bien indicando el `IMAGE ID` de la imagen, que en este ejemplo es `bf756fb1ae6
     ```bash
     ~$ docker rmi bf756fb1ae65
     ```
-En ambos casos obtendríamos el siguiente *output* por pantalla:
+En ambos casos obtendremos el siguiente *output* por pantalla:
     ```bash
     Untagged: hello-world:latest
     Untagged: hello-world@sha256:6a65f928fb91fcfbc963f7aa6d57c8eeb426ad9a20c7ee045538ef34847f44f1
@@ -309,13 +313,27 @@ En ambos casos obtendríamos el siguiente *output* por pantalla:
     alpine          latest  f70734b6a266    4 weeks ago     5.61MB
     ```
 
+## Exportar e importar una imagen
+
+Si quisiéramos exportar una imagen que ya tenemos compilada en local a un archivo TAR, por ejemplo para llevárnosla a otra máquina, podríamos hacerlo de la siguiente manera:
+
+```bash
+~$ docker save nombre_de_la_imagen:version > nombre_de_la_imagen_version.tar
+```
+
+Y para impiortarla desde el archivo TAR generado se puede hacer con el siguiente comando:
+
+```bash
+~$ docker load -i nombre_de_la_imagen_version.tar
+```
+
 ## ¿Qué es un contenedor?
 
-Un contenedor es una virtualización de un conjunto de programas, paquetes y librerías, instanciados a partir de una imagen Docker previamente compilada. para buscar un simil que nos suene familiar y que se pueda entender perfectamente por todo el mundo, se podría decir que una imagen Docker es como un molde de galletas y los contenedores serían las diferentes galletas que puedes hacer a partir de un mismo molde. Tener muchas imágenes Docker diferentes es el equivalente a tener muchos moldes de galletas diferentes, por ejemplo en forma de estrella, de círculo, de árbol, etc. Siempre puedes hacer galletas de diferentes formas, solo tienes que utilizar el molde que mejor te venga.
+Un contenedor es una virtualización de un conjunto de programas, paquetes y librerías, instanciados a partir de una imagen Docker previamente compilada. para buscar un símil que nos suene familiar y que se pueda entender por todo el mundo, se podría decir que una imagen Docker es como un molde de galletas y los contenedores serían las diferentes galletas que puedes hacer a partir de un mismo molde. Tener muchas imágenes Docker diferentes es el equivalente a tener muchos moldes de galletas, por ejemplo en forma de estrella, de círculo, de árbol, etc. Siempre puedes hacer galletas de diferentes formas, solo tienes que utilizar el molde que mejor te venga.
 
 Podemos iniciar o poner en funcionamiento contenedores Docker de varias maneras, bien porque tenemos la imagen ya compilada en local o bien porque Docker va a buscar la imagen al repositorio de DockerHub, donde hay centenares de imágenes ya compiladas y disponibles para usar.
 
-Veamos un ejemplo en el que iniciamos un contenedor que no tenemos en local pero que se descargará automáticamente del repositori de DockerHub:
+Veamos un ejemplo en el que iniciamos un contenedor que no tenemos en local pero que se descargará automáticamente del repositorio de DockerHub:
 
 ```bash
 ~$ docker run hello-world
@@ -347,9 +365,9 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
-Esto ya lo vimos en el punto anterior, como se peude ver, Docker primero va a buscar la imagen `hello-world` en local, y si no existe irá a buscarla al repositorio remoto DockerHub en internet.
+Esto ya lo vimos en el punto anterior, como se puede ver, Docker primero va a buscar la imagen `hello-world` en local, y si no existe irá a buscarla al repositorio remoto DockerHub en internet.
 
-Veamos ahora cómo iniciar un contenendor Docker de una imagen local, primero hay que listar las imágenes locales para ver cómo se llaman y qué versiones tenemos disponibles:
+Veamos ahora cómo iniciar un contenedor Docker de una imagen local, primero hay que listar las imágenes locales para ver cómo se llaman y qué versiones tenemos disponibles:
 
 ```bash
 ~$ docker images
@@ -370,17 +388,70 @@ O bien indicando el `IMAGE ID` que en este caso es `1d622ef86b13` de la siguient
 ~$ docker run -it 1d622ef86b13 bash
 ```
 
-Los flags `-it` son `i` para indicar que queremos iniciar un contenendor de forma interactiva, es decir, que queremos iniciarlo y entrar dentro para trabajar en él, y `t` para indicar que queremos iniciar una sesión `tty` en consola. al final indicamos el tipo de intérprete o programa que queremos ejecutar al entrar, que en nuestro caso es `bash`. Al crear el contenedor accederemos a una shell parecida a esta:
+Los flags `-it` son `i` para indicar que queremos iniciar un contenedor de forma interactiva, es decir, que queremos iniciarlo y entrar dentro para trabajar en él, y `t` para indicar que queremos iniciar una sesión `tty` en consola. al final indicamos el tipo de intérprete o programa que queremos ejecutar al entrar, que en nuestro caso es `bash`. Al crear el contenedor accederemos a una shell parecida a esta:
 
 ```bash
 root@5cbe59e47396:/#
 ```
 
-En este caso `root` es el usuario con el que hemos entrado en este contenendor, `5cbe59e47396` es el ID del contenedor que se ha creado, cada vez será uno diferente, y `/` es el path o directorio raíz en el que nos encontramos nada más entrar.
+En este caso `root` es el usuario con el que hemos entrado en este contenedor, `5cbe59e47396` es el ID del contenedor que se ha creado, cada vez será uno diferente, y `/` es el path o directorio raíz en el que nos encontramos nada más entrar.
 
 Para ver qué contenedores que tenemos creados podremos usar el siguiente comando:
+
 ```bash
 ~$ docker ps -a
-CONTAINER ID    IMAGE   COMMAND     CREATED     STATUS      PORTS       NAMES
+CONTAINER ID    IMAGE           COMMAND     CREATED         STATUS                      PORTS   NAMES
+a19cedb69642    ubuntu:latest   "bash"      16 seconds ago  Exited (0) 13 seconds ago           laughing_banzai
 ```
+
 El flag `-a` (all) es para mostrar no solo los contenedores que están ejecutándose, sino también los que están creados pero apagados.
+
+En este caso tenemos un contenedor con un `STATUS` que dice `Exited (0) 13 seconds ago`. Este contenedor está creado pero en este momento no se está ejecutando. Podríamos levantarlo con el comando `docker start` del siguiente modo:
+
+```bash
+~$ docker start a19cedb69642
+```
+
+Donde `a19cedb69642` en este ejemplo es el `CONTAINER ID`, cada contenedor tiene uno diferente que se genera aleatoriamente cuando se crea el contenedor. Si ahora consultamos el estado de los contenedores como antes veremos el nuevo estado:
+
+```bash
+~$ docker ps -a
+CONTAINER ID    IMAGE           COMMAND     CREATED         STATUS          PORTS   NAMES
+a19cedb69642    ubuntu:latest   "bash"      3 minutes ago   Up 4 seconds            laughing_banzai
+```
+
+Para borrar o eliminar un contenedor podemos usar la instrucción `docker rm`, pero antes debe estar parado, así que primero lo paramos:
+
+```bash
+~$ docker stop a19cedb69642
+a19cedb69642
+```
+
+Y una vez parado ejecutamos `docker rm` de la siguiente manera:
+
+```bash
+~$ docker rm a19cedb69642
+a19cedb69642
+```
+
+## Un contenedor con una mase de datos MySQL
+
+En este punto vamos a hacer un ejercicio un poco más complejo, vemos a crear una imagen Docker que contenga una base de datos MySQL y por otro lado haremos una imagen Docker con un sistema mínimo Alpine que se conecte a la base de datos de modo que pueda lanzar consultas (queries) y que la base de datos devuelva por pantalla los resultados.
+
+1. Creamos la imagen Docker de MySQL directamente del servidor DockerHub de la siguiente manera:
+    ```bash
+    ~$ docker run -d --name mysql -e 'MYSQL_ROOT_PASSWORD=test' -d mysql:latest
+    ```
+
+2. Entramos dentro del container:
+    ```bash
+    ~$ docker exec -it mysql bash
+    root@9961630bed6f:/#
+    ```
+
+3. Copiamos el archivo test/`setup.sql` dentro del container.
+
+4. Ejecutamos el siguiente comando para crear la base de datos y la tabla:
+    ```bash
+    root@9961630bed6f:/# mysql -u root -p"test" < setup.sql
+    ```
