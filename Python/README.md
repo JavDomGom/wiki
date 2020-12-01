@@ -145,3 +145,99 @@ Output:
 ```
 [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0]]
 ```
+
+## Imprimir el hash de una tupla
+
+Given an integer `n` and `n` space-separated integers as input, create a tuple `t` of those `n` integers. Then compute and print the result of `hash(t)`.
+
+```Python
+n = int(input())
+integer_list = map(int, input().split())
+integer_list = tuple([int(x) for x in integer_list])
+print(hash(integer_list))
+```
+
+Input:
+
+```
+2
+1 2
+```
+
+Output:
+
+```
+3713081631934410656
+```
+
+# Encuentra el subcampeón
+
+Given the participants' score sheet for your University Sports Day, you are required to find the runner-up score. You are given `n` scores. Store them in a list and find the score of the runner-up.
+
+Input Format:
+
+The first line contains `n`. The second line contains an array `A[]` of integers each separated by a space.
+
+Explanation:
+
+Given list is `[2, 3, 6, 6, 5]`. The maximum score is `6`, second maximum is `5`. Hence, we print `5` as the runner-up score.
+
+```Python
+n = int(input())
+arr = map(int, input().split())
+numbers = list(set([x for x in arr]))
+numbers.sort(reverse=True)
+print(numbers[1])
+```
+
+Input:
+
+```
+5
+2 3 6 6 5
+```
+
+Output:
+
+```
+5
+```
+
+# Listas anidadas
+
+Given the names and grades for each student in a class of `N` students, store them in a nested list and print the name(s) of any student(s) having the second lowest grade.
+
+Note: If there are multiple students with the second lowest grade, order their names alphabetically and print each name on a new line.
+
+Example:
+
+```Python
+records = [['chi', 20.0], ['beta', 50.0], ['alpha', 50.0]]
+```
+
+The ordered list of scores is `[20.0, 50.0]`, so the second lowest score is `50.0`. There are two students with that score: `['beta', 'alpha']`. Ordered alphabetically, the names are printed as:
+
+```
+alpha
+beta
+```
+
+```Python
+records = []
+scores = set()
+for _ in range(int(input())):
+    name = input()
+    score = float(input())
+    records.append([name, score])
+    scores.add(score)
+
+scores = list(scores)
+scores.sort()
+second_score = scores[1]
+
+lista = [r for r in records if r[1] == scores[1]]
+lista.sort()
+
+for x in lista:
+    print(x[0])
+```
