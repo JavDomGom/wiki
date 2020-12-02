@@ -1,0 +1,26 @@
+{
+  "files": [
+    {
+      "offset": 0,
+      "name": "file-00.gz",
+      "md5": "2af01f205c080f94d5b36d79753e1c03",
+      "description": "Dummy file 00 only for test.",
+      "owner": "name@domain.org"
+    },
+    {
+      "offset": 1,
+      "name": "file-01.gz",
+      "md5": "080f942af0753e11f205d79c03cd5b36",
+      "description": "Dummy file 01 only for test.",
+      "owner": "name@domain.org"
+    },
+    {
+      "offset": 2,
+      "name": "file-02.gz",
+      "md5": "1c031f205d5b362af0c080f94d793e75",
+      "description": "Dummy file 02 only for test.",
+      "owner": "name@domain.org"
+    }
+  ],
+  "nextPage": "m0w98j23hjd98273jd23d092umhhkja8"
+}
