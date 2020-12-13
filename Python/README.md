@@ -241,3 +241,15 @@ lista.sort()
 for x in lista:
     print(x[0])
 ```
+
+# Sets
+
+Crear dos conjuntos de enteros, hace run nuevo conjunto que contenga todoas sus diferencias, es decir, los elementos que están en `m` o `n`, pero no en ambos, y finalmente imprimir los elementos de forma ascendente.
+
+```Python
+m = set(map(int, input().split()))
+n = set(map(int, input().split()))
+
+for x in sorted(m.difference(n).union(n.difference(m))):
+    print(x)
+```
